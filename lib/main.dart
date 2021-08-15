@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'dart:convert';
+import 'package:coinginner_flutter/models/news.dart';
+import 'package:dio/dio.dart';
+import './services/http_news_service.dart';
 
 void main() {
   runApp(const MyApp());
+  //var testnews = NewsService.getNews();
+  //testnews.then((allnews) => allnews.forEach((news) => print(news.title)));
 }
 
 class MyApp extends StatelessWidget {
@@ -9,10 +16,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: 'Coinginner',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: const MyHomePage(title: 'Coinginner'),
     );
@@ -61,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), //
+      ),
     );
   }
 }

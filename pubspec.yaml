@@ -38,6 +38,10 @@ dependencies:
   get: ^4.3.6
   dio: ^4.0.0
   http: ^0.13.3
+  cloud_firestore: ^2.4.0
+  json_serializable: ^5.0.0
+  json_annotation: ^4.1.0
+  build_runner: ^2.1.1
   
 
 dev_dependencies:
@@ -51,7 +55,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-
+  flutter_native_splash: ^1.2.1
+flutter_native_splash: 
+  color: "#3a0ca3"
+  image: "assets/splash/splash.png" 
+  android: true
+  ios: true
+  android_gravity: center
+  ios_content_mode: center
 
 flutter_icons:
   android: "launcher_icon"
