@@ -1,14 +1,22 @@
+import 'package:coinginner_flutter/services/http_coin_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:coinginner_flutter/models/news.dart';
 import 'package:dio/dio.dart';
 import './services/http_news_service.dart';
+import 'package:coinginner_flutter/screens/news_screen.dart';
 
 void main() {
+  CoinService.getCryptocurrencyList()
+      .then((coins) => coins.forEach((coin) {
+            print(coin.name);
+          }))
+      .catchError((error) {
+    print(error);
+  });
+
   runApp(const MyApp());
-  //var testnews = NewsService.getNews();
-  //testnews.then((allnews) => allnews.forEach((news) => print(news.title)));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,47 +29,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const MyHomePage(title: 'Coinginner'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+      //home: const MyHomePage(title: 'Coinginner'),
+      home: const NewsScreen(),
     );
   }
 }

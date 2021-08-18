@@ -28,10 +28,12 @@ class News {
     this.sourceLink = sourceLink ?? "";
     this.icon = icon ?? "";
     this.link = link ?? "";
+    this.imgURL = imgURL ?? "";
   }
 
   factory News.fromJSON(Map<String, dynamic> json) {
     return News(
+      imgURL: json["imgURL"],
       id: json["id"],
       feedDate: json["feedDate"],
       title: json["title"],
