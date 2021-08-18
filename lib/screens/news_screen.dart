@@ -11,59 +11,124 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Top News'),
-        ),
-        body: FutureBuilder(
-          future: NewsService.getTrendingNews(),
-          builder: (BuildContext context, AsyncSnapshot<List<News>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                if (snapshot.hasData) {
-                  var allNews = snapshot.data;
-                  if (allNews is List<News>) {
-                    return ListView.builder(
-                        itemCount: allNews.length,
-                        itemBuilder: (BuildContext itemContext, int index) {
-                          News news = allNews[index];
-                          var desc = news.description.substring(
-                              0,
-                              news.description.length < 255
-                                  ? news.description.length
-                                  : 255);
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+                title: Text('Top News'),
+                bottom: TabBar(
+                  tabs: [
+                    Tab(icon: Icon(Icons.directions_car)),
+                    Tab(icon: Icon(Icons.directions_transit)),
+                  ],
+                )),
+            body: TabBarView(
+              children: [
+                FutureBuilder(
+                  future: NewsService.getTrendingNews(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<News>> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.done:
+                        if (snapshot.hasData) {
+                          var allNews = snapshot.data;
+                          if (allNews is List<News>) {
+                            return ListView.builder(
+                                itemCount: allNews.length,
+                                itemBuilder:
+                                    (BuildContext itemContext, int index) {
+                                  News news = allNews[index];
+                                  var desc = news.description.substring(
+                                      0,
+                                      news.description.length < 255
+                                          ? news.description.length
+                                          : 255);
 
-                          return Card(
-                              child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              Expanded(
-                                child: Image.network(news.imgURL),
-                              ),
-                              Expanded(
-                                  child: ListTile(
-                                title: Text(news.title),
-                                subtitle: Text(
-                                  desc,
-                                  maxLines: 3,
-                                ),
-                              )),
-                            ]),
-                          ));
-                        });
-                  }
-                }
-                break;
-              case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
-              case ConnectionState.none:
-                return Text("Error");
-              default:
-                return Text("Error");
-            }
+                                  return Card(
+                                      child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Row(children: [
+                                      Expanded(
+                                        child: Image.network(news.imgURL),
+                                      ),
+                                      Expanded(
+                                          child: ListTile(
+                                        title: Text(news.title),
+                                        subtitle: Text(
+                                          desc,
+                                          maxLines: 3,
+                                        ),
+                                      )),
+                                    ]),
+                                  ));
+                                });
+                          }
+                        }
+                        break;
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      case ConnectionState.none:
+                        return Text("Error");
+                      default:
+                        return Text("Error");
+                    }
 
-            return CircularProgressIndicator();
-          },
-        ));
+                    return CircularProgressIndicator();
+                  },
+                ),
+                FutureBuilder(
+                  future: NewsService.getHandpickedNews(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<News>> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.done:
+                        if (snapshot.hasData) {
+                          var allNews = snapshot.data;
+                          if (allNews is List<News>) {
+                            return ListView.builder(
+                                itemCount: allNews.length,
+                                itemBuilder:
+                                    (BuildContext itemContext, int index) {
+                                  News news = allNews[index];
+                                  var desc = news.description.substring(
+                                      0,
+                                      news.description.length < 255
+                                          ? news.description.length
+                                          : 255);
+
+                                  return Card(
+                                      child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Row(children: [
+                                      Expanded(
+                                        child: Image.network(news.imgURL),
+                                      ),
+                                      Expanded(
+                                          child: ListTile(
+                                        title: Text(news.title),
+                                        subtitle: Text(
+                                          desc,
+                                          maxLines: 3,
+                                        ),
+                                      )),
+                                    ]),
+                                  ));
+                                });
+                          }
+                        }
+                        break;
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      case ConnectionState.none:
+                        return Text("Error");
+                      default:
+                        return Text("Error");
+                    }
+
+                    return CircularProgressIndicator();
+                  },
+                )
+              ],
+            )));
   }
 }

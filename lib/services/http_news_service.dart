@@ -5,11 +5,11 @@ import 'package:dio/dio.dart';
 
 class NewsService {
   static String get TRENDING {
-    return "https://api.coinstats.app/public/v1/news/trending?skip=0&limit=10";
+    return "https://api.coinstats.app/public/v1/news/trending?skip=0&limit=5";
   }
 
   static String get HANDPICKED {
-    return "https://api.coinstats.app/public/v1/news/handpicked?skip=0&limit=10";
+    return "https://api.coinstats.app/public/v1/news/handpicked?skip=0&limit=5";
   }
   // First try
   //http package did not work due to null error,upgraded to dio

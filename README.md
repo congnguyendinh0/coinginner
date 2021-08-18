@@ -1,6 +1,6 @@
 # coinginner_flutter
 
-A new Flutter project.
+Coinginner
 
 ## Getting Started
 
