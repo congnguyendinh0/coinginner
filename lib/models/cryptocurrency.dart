@@ -26,6 +26,7 @@ class Cryptocurrency {
   dynamic roi = 0;
   String lastUpdated = "";
   double priceChangePercentage7dInCurrency = 0;
+  List<double> sparkline = [];
 
   Cryptocurrency({
     String? id = "",
@@ -55,6 +56,8 @@ class Cryptocurrency {
     dynamic roi = 0,
     String? lastUpdated = "",
     double? priceChangePercentage7dInCurrency = 0,
+    // checken nochmal
+    List<double>? sparkline,
   }) {
     this.id = id ?? "";
     this.symbol = symbol ?? "";
@@ -83,6 +86,9 @@ class Cryptocurrency {
     this.lastUpdated = lastUpdated ?? "";
     this.priceChangePercentage7dInCurrency =
         priceChangePercentage7dInCurrency ?? 0;
+
+    // pruefen
+    this.sparkline = [];
   }
 
   factory Cryptocurrency.fromJSON(Map<String, dynamic> json) {
@@ -116,6 +122,8 @@ class Cryptocurrency {
         atlDate: json["atl_date"],
         roi: json["roi"],
         lastUpdated: json["last_updated"],
+        //pruefen
+        sparkline: json["sparkline"],
         priceChangePercentage7dInCurrency:
             (json["price_change_percentage_7d_in_currency"]).toDouble());
   }

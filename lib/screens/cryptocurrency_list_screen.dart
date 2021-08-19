@@ -20,13 +20,13 @@ class CoinScreen extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  var cryptocurrencyList = snapshot.data;
-                  if (cryptocurrencyList is List<Cryptocurrency>) {
+                  var cryptoCurrencyList = snapshot.data;
+                  if (cryptoCurrencyList is List<Cryptocurrency>) {
                     return ListView.builder(
-                        itemCount: cryptocurrencyList.length,
+                        itemCount: cryptoCurrencyList.length,
                         itemBuilder: (BuildContext itemContext, int index) {
                           Cryptocurrency cryptocurrency =
-                              cryptocurrencyList[index];
+                              cryptoCurrencyList[index];
 
                           return Card(
                               child: Padding(

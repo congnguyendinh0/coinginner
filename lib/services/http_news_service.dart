@@ -45,7 +45,7 @@ class NewsService {
   }
 
   static Future<List<News>> getHandpickedNews() async {
-    var response = await Dio().get(NewsService.HANDPICKED);
+    Response response = await Dio().get(NewsService.HANDPICKED);
     if (response.statusCode == 200) {
       Map<String, dynamic> body = response.data as Map<String, dynamic>;
       var jsonValue = body["news"];
