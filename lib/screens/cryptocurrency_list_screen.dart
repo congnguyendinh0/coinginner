@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:coinginner_flutter/models/news.dart';
-import 'package:dio/dio.dart';
-import '../services/http_news_service.dart';
-import 'package:coinginner_flutter/screens/news_screen.dart';
+
+import 'package:coinginner_flutter/models/cryptocurrency.dart';
+
+import '../services/http_coin_service.dart';
 
 class CoinScreen extends StatelessWidget {
   const CoinScreen({Key? key}) : super(key: key);
@@ -12,38 +11,35 @@ class CoinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Top News'),
+          title: Text('Top Coins'),
         ),
         body: FutureBuilder(
-          future: NewsService.getTrendingNews(),
-          builder: (BuildContext context, AsyncSnapshot<List<News>> snapshot) {
+          future: CoinService.getCryptocurrencyList(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<Cryptocurrency>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  var allNews = snapshot.data;
-                  if (allNews is List<News>) {
+                  var cryptocurrencyList = snapshot.data;
+                  if (cryptocurrencyList is List<Cryptocurrency>) {
                     return ListView.builder(
-                        itemCount: allNews.length,
+                        itemCount: cryptocurrencyList.length,
                         itemBuilder: (BuildContext itemContext, int index) {
-                          News news = allNews[index];
-                          var desc = news.description.substring(
-                              0,
-                              news.description.length < 255
-                                  ? news.description.length
-                                  : 255);
+                          Cryptocurrency cryptocurrency =
+                              cryptocurrencyList[index];
 
                           return Card(
                               child: Padding(
                             padding: EdgeInsets.all(10.0),
                             child: Row(children: [
                               Expanded(
-                                child: Image.network(news.imgURL),
+                                child: Image.network(cryptocurrency.image),
                               ),
                               Expanded(
                                   child: ListTile(
-                                title: Text(news.title),
+                                title: Text(cryptocurrency.name),
                                 subtitle: Text(
-                                  desc,
+                                  cryptocurrency.currentPrice.toString(),
                                   maxLines: 3,
                                 ),
                               )),

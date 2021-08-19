@@ -2,6 +2,7 @@
 
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class CoinService {
   static String get CRYPTOCURRENCIES {
@@ -9,16 +10,16 @@ class CoinService {
   }
 
   static Future<List<Cryptocurrency>> getCryptocurrencyList() async {
-    var response = await Dio().get(CoinService.CRYPTOCURRENCIES);
+    Response response = await Dio().get(CoinService.CRYPTOCURRENCIES);
+
     if (response.statusCode == 200) {
-      Map<String, dynamic> body = response.data as Map<String, dynamic>;
-      var json = body["cryptocurrency"];
-      List<Cryptocurrency> cryptocurrencyList = [];
-      for (var i = 0; i < json.length; i++) {
-        var coin = Cryptocurrency.fromJSON(json[i]);
-        cryptocurrencyList.add(coin);
+      List<dynamic> responseList = response.data;
+      List<Cryptocurrency> cryptoCurrencyList = [];
+      for (var i = 0; i < responseList.length; i++) {
+        cryptoCurrencyList.add(Cryptocurrency.fromJSON(responseList[i]));
       }
-      return cryptocurrencyList;
+      return cryptoCurrencyList;
+      // return cryptocurrencyList.map((e) => Cryptocurrency.fromJSON(e)).toList();
     } else {
       throw Exception("Error");
     }

@@ -1,3 +1,4 @@
+import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       //home: const MyHomePage(title: 'Coinginner'),
-      home: const NewsScreen(),
+      home: const CoinScreen(),
     );
   }
 }
