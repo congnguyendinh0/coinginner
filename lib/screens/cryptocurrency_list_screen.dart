@@ -1,3 +1,4 @@
+import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
@@ -30,19 +31,46 @@ class CoinScreen extends StatelessWidget {
 
                           return Card(
                               child: Padding(
-                            padding: EdgeInsets.all(10.0),
+                            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                             child: Row(children: [
                               Expanded(
-                                child: Image.network(cryptocurrency.image),
-                              ),
-                              Expanded(
+                                  flex: 2,
                                   child: ListTile(
-                                title: Text(cryptocurrency.name),
-                                subtitle: Text(
-                                  cryptocurrency.currentPrice.toString(),
-                                  maxLines: 3,
-                                ),
-                              )),
+                                    leading: CircleAvatar(
+                                      foregroundImage:
+                                          NetworkImage(cryptocurrency.image),
+                                      backgroundColor: Colors.pink,
+                                    ),
+                                    title: Text(cryptocurrency.name,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CoinDetailScreen(
+                                                    cryptocurrency:
+                                                        cryptoCurrencyList[
+                                                            index],
+                                                  )));
+                                    },
+                                  )),
+                              Expanded(
+                                  flex: 1,
+                                  child: ListTile(
+                                    title: Text(
+                                      cryptocurrency.currentPrice
+                                          .toStringAsFixed(2),
+                                      maxLines: 1,
+                                    ),
+                                    subtitle: Text(
+                                      cryptocurrency.priceChangePercentage24h
+                                              .toStringAsFixed(2) +
+                                          " %",
+                                    ),
+                                  ))
                             ]),
                           ));
                         });

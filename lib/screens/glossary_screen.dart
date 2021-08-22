@@ -8,28 +8,30 @@ class GlossaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     CollectionReference glossary =
         FirebaseFirestore.instance.collection('glossary');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Glossary'),
-      ),
-      body: Center(
-        child: StreamBuilder(
-            stream: glossary.orderBy('word').snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return ListView(
-                children: snapshot.data!.docs.map((glossary) {
-                  return Center(
-                    child: ListTile(
-                      title: Text(glossary["word"]),
-                      subtitle: Text(glossary["description"]),
-                    ),
-                  );
-                }).toList(),
-              );
-            }),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Glossary'),
+        ),
+        body: Center(
+          child: StreamBuilder(
+              stream: glossary.orderBy('word').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ListView(
+                  children: snapshot.data!.docs.map((glossary) {
+                    return Center(
+                      child: ListTile(
+                        title: Text(glossary["word"]),
+                        subtitle: Text(glossary["description"]),
+                      ),
+                    );
+                  }).toList(),
+                );
+              }),
+        ),
       ),
     );
   }

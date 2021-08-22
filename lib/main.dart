@@ -1,3 +1,4 @@
+import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,13 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Coinginner',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
+          primarySwatch: Colors.purple,
+          scaffoldBackgroundColor: Colors.purple,
+          cardTheme: CardTheme(
+            color: Colors.pink,
+          )),
       //home: const MyHomePage(title: 'Coinginner'),
-      home: const GlossaryScreen(),
+      home: const CoinScreen(),
     );
   }
 }

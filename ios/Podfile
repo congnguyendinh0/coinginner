@@ -26,7 +26,7 @@ end
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
-
+# added this line to fix firebase building errors https://github.com/invertase/firestore-ios-sdk-frameworks according to firebase team
 target 'Runner' do
   use_frameworks!
   use_modular_headers!

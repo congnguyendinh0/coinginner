@@ -18,8 +18,8 @@ class NewsScreen extends StatelessWidget {
                 title: Text('Top News'),
                 bottom: TabBar(
                   tabs: [
-                    Tab(icon: Icon(Icons.directions_car)),
-                    Tab(icon: Icon(Icons.directions_transit)),
+                    Tab(icon: Icon(Icons.trending_up)),
+                    Tab(icon: Icon(Icons.price_check_rounded)),
                   ],
                 )),
             body: TabBarView(
@@ -96,23 +96,31 @@ class NewsScreen extends StatelessWidget {
                                           ? news.description.length
                                           : 255);
 
-                                  return Card(
-                                      child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Row(children: [
-                                      Expanded(
-                                        child: Image.network(news.imgURL),
-                                      ),
-                                      Expanded(
-                                          child: ListTile(
-                                        title: Text(news.title),
-                                        subtitle: Text(
-                                          desc,
-                                          maxLines: 3,
+                                  return GestureDetector(
+                                    onTap: () {},
+                                    child: Card(
+                                        child: Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Row(children: [
+                                        Expanded(
+                                          child: Image.network(news.imgURL),
                                         ),
-                                      )),
-                                    ]),
-                                  ));
+                                        Expanded(
+                                            child: ListTile(
+                                          title: Text(
+                                            news.title,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            desc,
+                                            maxLines: 3,
+                                          ),
+                                        )),
+                                      ]),
+                                    )),
+                                  );
                                 });
                           }
                         }
