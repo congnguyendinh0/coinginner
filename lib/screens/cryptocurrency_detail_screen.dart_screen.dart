@@ -89,6 +89,7 @@ class CoinDetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
+                        //Text(coinextra.genesisDate ?? "")
                       ],
                     );
                   }

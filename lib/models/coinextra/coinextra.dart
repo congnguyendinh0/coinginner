@@ -9,6 +9,8 @@ class Coinextra {
   String? id;
   Description? description;
   List<String>? categories;
+  @JsonKey(name: 'genesis_date')
+  String? genesisDate;
 
   Coinextra({this.id, this.description});
   factory Coinextra.fromJson(Map<String, dynamic> data) =>
