@@ -45,26 +45,60 @@ class CoinDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(children: [
-        SfSparkAreaChart(
-            trackball: SparkChartTrackball(
-                activationMode: SparkChartActivationMode.tap),
-            data: data,
-            color: Colors.black),
-        FutureBuilder<Coinextra>(
-          future: getCoinextra(id: cryptocurrency.id),
-          builder: (BuildContext context, AsyncSnapshot<Coinextra> snapshot) {
-            if (snapshot.hasData) {
-              var coinextra = snapshot.data;
-              if (coinextra != null) {
-                var text = coinextra.description;
-                return Text(text?.en ?? "");
-              }
-            }
-            return const Text("");
-          },
-        )
-      ]),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(children: [
+            SfSparkAreaChart(
+                trackball: SparkChartTrackball(
+                    activationMode: SparkChartActivationMode.tap),
+                data: data,
+                color: Colors.black),
+            FutureBuilder<Coinextra>(
+              future: getCoinextra(id: cryptocurrency.id),
+              builder:
+                  (BuildContext context, AsyncSnapshot<Coinextra> snapshot) {
+                if (snapshot.hasData) {
+                  var coinextra = snapshot.data;
+                  if (coinextra != null) {
+                    var text = coinextra.description;
+                    //return Text(text?.en ?? "");
+                    var categories = coinextra.categories;
+                    return Column(
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: <Widget>[
+                              for (var item in categories ?? [])
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Chip(label: Text(item)),
+                                )
+                            ],
+                          ),
+                        ),
+                        Divider(),
+                        ExpansionTile(
+                          title: Text(
+                            'Description',
+                          ),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(text?.en ?? ""),
+                            )
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                }
+                return const Text("");
+              },
+            )
+          ]),
+        ),
+      ),
     );
   }
 }

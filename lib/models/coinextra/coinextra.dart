@@ -8,6 +8,7 @@ part 'coinextra.g.dart';
 class Coinextra {
   String? id;
   Description? description;
+  List<String>? categories;
 
   Coinextra({this.id, this.description});
   factory Coinextra.fromJson(Map<String, dynamic> data) =>
