@@ -67,13 +67,24 @@ class CoinDetailScreen extends StatelessWidget {
                       children: [
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: <Widget>[
-                              for (var item in categories ?? [])
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Chip(label: Text(item)),
-                                )
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Categories",
+                                    textAlign: TextAlign.start),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  for (var item in categories ?? [])
+                                    Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Chip(
+                                          label: Text(item,
+                                              style: TextStyle(fontSize: 8))),
+                                    )
+                                ],
+                              ),
                             ],
                           ),
                         ),
