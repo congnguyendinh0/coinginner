@@ -26,39 +26,40 @@ class Cryptocurrency {
   dynamic roi = 0;
   String lastUpdated = "";
   double priceChangePercentage7dInCurrency = 0;
-  List<double> sparkline = [];
+  Map<String, dynamic> sparkline = Map();
+  // Sparkline sparkline;
 
-  Cryptocurrency({
-    String? id = "",
-    String? symbol = "",
-    String? name = "",
-    String? image = "",
-    double? currentPrice = 0,
-    double? marketCap = 0,
-    double? marketCapRank = 0,
-    double? fullyDilutedValuation = 0,
-    double? totalVolume = 0,
-    double? high24h = 0,
-    double? low24h = 0,
-    double? priceChange24h = 0,
-    double? priceChangePercentage24h = 0,
-    double? marketCapChange24h = 0,
-    double? marketCapChangePercentage24h = 0,
-    double? circulatingSupply = 0,
-    double? totalSupply = 0,
-    double? maxSupply = 0,
-    double? ath = 0,
-    double? athChangePercentage = 0,
-    String? athDate = "",
-    double? atl = 0,
-    double? atlChangePercentage = 0,
-    String? atlDate = "",
-    dynamic roi = 0,
-    String? lastUpdated = "",
-    double? priceChangePercentage7dInCurrency = 0,
-    // checken nochmal
-    List<double>? sparkline,
-  }) {
+  Cryptocurrency(
+      {String? id = "",
+      String? symbol = "",
+      String? name = "",
+      String? image = "",
+      double? currentPrice = 0,
+      double? marketCap = 0,
+      double? marketCapRank = 0,
+      double? fullyDilutedValuation = 0,
+      double? totalVolume = 0,
+      double? high24h = 0,
+      double? low24h = 0,
+      double? priceChange24h = 0,
+      double? priceChangePercentage24h = 0,
+      double? marketCapChange24h = 0,
+      double? marketCapChangePercentage24h = 0,
+      double? circulatingSupply = 0,
+      double? totalSupply = 0,
+      double? maxSupply = 0,
+      double? ath = 0,
+      double? athChangePercentage = 0,
+      String? athDate = "",
+      double? atl = 0,
+      double? atlChangePercentage = 0,
+      String? atlDate = "",
+      dynamic roi = 0,
+      String? lastUpdated = "",
+      double? priceChangePercentage7dInCurrency = 0,
+
+      // checken nochmal
+      Map<String, dynamic>? sparkline = null}) {
     this.id = id ?? "";
     this.symbol = symbol ?? "";
     this.name = name ?? "";
@@ -86,9 +87,9 @@ class Cryptocurrency {
     this.lastUpdated = lastUpdated ?? "";
     this.priceChangePercentage7dInCurrency =
         priceChangePercentage7dInCurrency ?? 0;
+    this.sparkline = sparkline ?? Map();
 
     // pruefen
-    this.sparkline = [];
   }
 
   factory Cryptocurrency.fromJSON(Map<String, dynamic> json) {
@@ -123,8 +124,20 @@ class Cryptocurrency {
         roi: json["roi"],
         lastUpdated: json["last_updated"],
         //pruefen
-        sparkline: json["sparkline"],
+        sparkline: json["sparkline_in_7d"],
         priceChangePercentage7dInCurrency:
             (json["price_change_percentage_7d_in_currency"]).toDouble());
   }
 }
+
+// class Sparkline {
+//   List<double> price = [];
+
+//   Sparkline({List<double>? price}) {
+//     this.price = price ?? [];
+//   }
+
+//   factory Sparkline.fromJson(Map<String, dynamic> json) {
+//     return Sparkline(price: json["price"]);
+//   }
+// }

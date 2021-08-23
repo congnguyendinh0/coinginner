@@ -47,14 +47,17 @@ class CoinScreen extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         )),
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CoinDetailScreen(
+                                      //without getx
+                                      //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CoinDetailScreen(
                                                     cryptocurrency:
                                                         cryptoCurrencyList[
-                                                            index],
-                                                  )));
+                                                            index])),
+                                      );
                                     },
                                   )),
                               Expanded(

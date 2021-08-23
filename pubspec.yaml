@@ -43,6 +43,8 @@ dependencies:
   json_annotation: ^4.1.0
   build_runner: ^2.1.1
   url_launcher: ^6.0.9
+  chart_sparkline: ^1.0.5
+  syncfusion_flutter_charts: ^19.2.56
   
 
 dev_dependencies:

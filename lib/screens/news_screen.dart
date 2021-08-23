@@ -18,8 +18,11 @@ class NewsScreen extends StatelessWidget {
                 title: Text('Top News'),
                 bottom: TabBar(
                   tabs: [
-                    Tab(icon: Icon(Icons.trending_up)),
-                    Tab(icon: Icon(Icons.price_check_rounded)),
+                    Tab(icon: Icon(Icons.trending_up), text: "TRENDING"),
+                    Tab(
+                      icon: Icon(Icons.price_check_rounded),
+                      text: "HANDPICKED",
+                    ),
                   ],
                 )),
             body: TabBarView(
