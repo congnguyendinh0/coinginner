@@ -2,6 +2,7 @@ import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
+import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
             color: Colors.pink,
           )),
       //home: const MyHomePage(title: 'Coinginner'),
-      home: const CoinScreen(),
+      home: SearchScreen(),
     );
   }
 }
