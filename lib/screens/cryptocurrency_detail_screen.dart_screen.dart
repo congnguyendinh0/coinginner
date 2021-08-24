@@ -79,7 +79,8 @@ class CoinDetailScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: SfSparkLineChart(
@@ -138,6 +139,7 @@ class CoinDetailScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),

@@ -38,10 +38,10 @@ class SearchScreen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        body: Column(children: [
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Obx(() => Text(searchUrlController.url.value)),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(5.0),
             child: TextField(
               autofocus: true,
               decoration: InputDecoration(
@@ -129,7 +129,7 @@ class SearchScreen extends StatelessWidget {
                       }
                       break;
                     case ConnectionState.waiting:
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: Text(''));
                     case ConnectionState.none:
                       return Text("Error");
                     default:
@@ -139,11 +139,16 @@ class SearchScreen extends StatelessWidget {
                   return Text("");
                 },
               )),
-
+          Divider(),
           Container(
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
-            child: Card(child: Text('hi')),
-          )
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 20),
+              child: Text(
+                'EXPLORE TRENDING COINS',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white),
+              )),
         ]),
       ),
     );
