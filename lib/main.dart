@@ -25,11 +25,17 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Coinginner',
       theme: ThemeData(
-          primarySwatch: Colors.purple,
-          scaffoldBackgroundColor: Colors.purple,
-          cardTheme: CardTheme(
-            color: Colors.pink,
-          )),
+        primaryColor: Color(0xff340b93),
+        appBarTheme: AppBarTheme(
+            backgroundColor: Color(0xff340b93),
+            elevation: 1,
+            centerTitle: false),
+        scaffoldBackgroundColor: Color(0xff340b93),
+        cardTheme: CardTheme(
+          color: Color(0xffF72585),
+        ),
+        buttonTheme: ButtonThemeData(buttonColor: Color(0xffF72585)),
+      ),
       //home: const MyHomePage(title: 'Coinginner'),
       home: SearchScreen(),
     );

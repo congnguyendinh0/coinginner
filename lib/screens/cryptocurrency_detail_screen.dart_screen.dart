@@ -8,6 +8,7 @@ import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/models/coinextra/coinextra.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   static Future<Coinextra> getCoinextra({String id = "bitcoin"}) async {
@@ -79,11 +80,16 @@ class CoinDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(children: [
-            SfSparkAreaChart(
-                trackball: SparkChartTrackball(
-                    activationMode: SparkChartActivationMode.tap),
-                data: data,
-                color: Colors.black),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 15),
+              child: SfSparkLineChart(
+                  axisLineColor: Colors.white,
+                  axisLineDashArray: <double>[10, 3],
+                  trackball: SparkChartTrackball(
+                      activationMode: SparkChartActivationMode.tap),
+                  data: data,
+                  color: Colors.white),
+            ),
             FutureBuilder<Coinextra>(
               future: getCoinextra(id: cryptocurrency.id),
               builder:
@@ -96,13 +102,46 @@ class CoinDetailScreen extends StatelessWidget {
                     var categories = coinextra.categories;
                     return Column(
                       children: [
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(0xffF72585)),
+                              onPressed: () {
+                                Get.to(ExchangeListScreen());
+                              },
+                              child: const Text('BUY ON THESE EXCHANGES',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold))),
+                        ),
+                        ExpansionTile(
+                          title: Text(
+                              'ABOUT ${cryptocurrency.name.toUpperCase()}',
+                              style: TextStyle(color: Colors.white)),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+
+                                  // https://stackoverflow.com/questions/51593790/remove-html-tags-from-a-string-in-dart
+                                  text?.en?.replaceAll(
+                                          RegExp(r'<[^>]*>|&[^;]+;'), '') ??
+                                      "",
+                                  style: TextStyle(color: Colors.white)),
+                            )
+                          ],
+                        ),
+                        //Text(coinextra.genesisDate ?? ""),
+                        Divider(),
+
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text("Categories",
+                                child: Text("CATEGORIES",
                                     textAlign: TextAlign.start),
                               ),
                               Row(
@@ -119,27 +158,7 @@ class CoinDetailScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Divider(),
-                        ElevatedButton(
-                            onPressed: () {
-                              Get.to(ExchangeListScreen());
-                            },
-                            child: const Text('Buy here')),
-                        Divider(),
-                        ExpansionTile(
-                          title: Text(
-                            'Description',
-                          ),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(text?.en ?? ""),
-                            )
-                          ],
-                        ),
-                        //Text(coinextra.genesisDate ?? ""),
-                        Divider(),
-                        //if (cryptocurrency.id == 'bitcoin') {}
+/*                         //if (cryptocurrency.id == 'bitcoin') {}
                         if (cryptocurrency.name.toLowerCase() == 'bitcoin' ||
                             cryptocurrency.name.toLowerCase() == 'ethereum')
                           FutureBuilder<PublicTreasury>(
@@ -176,7 +195,7 @@ class CoinDetailScreen extends StatelessWidget {
                                 return const Text("");
                               })
                         else
-                          Text('')
+                          Text('') */
                       ],
                     );
                   }

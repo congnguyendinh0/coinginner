@@ -33,7 +33,10 @@ class SearchScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Search"),
+          title: Text(
+            "SEARCH",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         body: Column(children: [
           // Obx(() => Text(searchUrlController.url.value)),
@@ -41,13 +44,21 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'bitcoin'),
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                  ),
+                  prefixIcon: Icon(Icons.search),
+                  hintText:
+                      'Search for cryptocurrency (e.g bitcoin) with coingecko id'),
               onSubmitted: (id) => searchUrlController.setUrl(id),
             ),
           ),
           Obx(() => FutureBuilder(
-                future:
-                    getCryptocurrencyList(id: searchUrlController.url.value),
+                future: getCryptocurrencyList(
+                    id: searchUrlController.url.value.toLowerCase()),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Cryptocurrency>> snapshot) {
                   switch (snapshot.connectionState) {
@@ -125,9 +136,14 @@ class SearchScreen extends StatelessWidget {
                       return Text("Error");
                   }
 
-                  return CircularProgressIndicator();
+                  return Text("");
                 },
-              ))
+              )),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+            child: Card(child: Text('hi')),
+          )
         ]),
       ),
     );
