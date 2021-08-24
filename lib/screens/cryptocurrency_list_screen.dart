@@ -41,11 +41,13 @@ class CoinScreen extends StatelessWidget {
                                           NetworkImage(cryptocurrency.image),
                                       backgroundColor: Colors.pink,
                                     ),
-                                    title: Text(cryptocurrency.name,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    title: Center(
+                                      child: Text(cryptocurrency.name,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                    ),
                                     onTap: () {
                                       //without getx
                                       //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));

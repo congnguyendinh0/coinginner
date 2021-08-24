@@ -14,8 +14,8 @@ Exchange _$ExchangeFromJson(Map<String, dynamic> json) => Exchange(
       ..image = json['image'] as String?
       ..country = json['country'] as String?
       ..url = json['url'] as String?
-      ..yearEstablished = (json['year_established'] as num?)?.toDouble()
-      ..trustScoreRank = (json['trust_score_rank'] as num?)?.toDouble()
+      ..yearEstablished = json['year_established'] as int?
+      ..trustScoreRank = json['trust_score_rank'] as int?
       ..tradeVolume24hBtcNormalized =
           (json['trade_volume_24h_btc_normalized'] as num?)?.toDouble();
 

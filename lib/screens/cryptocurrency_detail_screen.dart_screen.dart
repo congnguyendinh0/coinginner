@@ -1,3 +1,5 @@
+import 'package:coinginner_flutter/models/companies/publictreasury.dart';
+import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -5,15 +7,29 @@ import 'package:coinginner_flutter/models/cryptocurrency.dart';
 
 import 'package:coinginner_flutter/models/coinextra/coinextra.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   static Future<Coinextra> getCoinextra({String id = "bitcoin"}) async {
-    Response response = await Dio().get(
+    var response = await Dio().get(
         "https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false");
 
     if (response.statusCode == 200) {
       Coinextra coinextra = Coinextra.fromJson(response.data);
       return coinextra;
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  static Future<PublicTreasury> getPublicTreasury(
+      {String name = "bitcoin"}) async {
+    var response = await Dio().get(
+        "https://api.coingecko.com/api/v3/companies/public_treasury/${name}");
+
+    if (response.statusCode == 200) {
+      PublicTreasury publicTreasury = PublicTreasury.fromJson(response.data);
+      return publicTreasury;
     } else {
       throw Exception("Error");
     }
@@ -31,12 +47,27 @@ class CoinDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(cryptocurrency.name +
-            "(" +
-            cryptocurrency.symbol +
-            ")"
-                "#" +
-            cryptocurrency.marketCapRank.toInt().toString()),
+        title: Row(
+          children: [
+            CircleAvatar(
+              foregroundImage: NetworkImage(cryptocurrency.image),
+              backgroundColor: Colors.purple,
+              radius: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Text(
+                cryptocurrency.name +
+                    "(" +
+                    cryptocurrency.symbol +
+                    ")"
+                        " #" +
+                    cryptocurrency.marketCapRank.toInt().toString(),
+                style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis),
+              ),
+            ),
+          ],
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.bookmark_add),
@@ -89,6 +120,12 @@ class CoinDetailScreen extends StatelessWidget {
                           ),
                         ),
                         Divider(),
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.to(ExchangeListScreen());
+                            },
+                            child: const Text('Buy here')),
+                        Divider(),
                         ExpansionTile(
                           title: Text(
                             'Description',
@@ -100,7 +137,46 @@ class CoinDetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        //Text(coinextra.genesisDate ?? "")
+                        //Text(coinextra.genesisDate ?? ""),
+                        Divider(),
+                        //if (cryptocurrency.id == 'bitcoin') {}
+                        if (cryptocurrency.name.toLowerCase() == 'bitcoin' ||
+                            cryptocurrency.name.toLowerCase() == 'ethereum')
+                          FutureBuilder<PublicTreasury>(
+                              future:
+                                  getPublicTreasury(name: cryptocurrency.name),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<PublicTreasury> snapshot) {
+                                if (snapshot.hasData) {
+                                  var publictreasury = snapshot.data;
+                                  return ExpansionTile(
+                                    title: Text(
+                                        'Companies that own ${cryptocurrency.name}'),
+                                    children: [
+                                      Expanded(
+                                        child: DataTable(columns: [
+                                          DataColumn(
+                                              label: Text('total holdings')),
+                                          DataColumn(
+                                              label: Text('total Value Usd'))
+                                        ], rows: [
+                                          DataRow(cells: [
+                                            DataCell(Text(publictreasury!
+                                                .totalHoldings
+                                                .toString())),
+                                            DataCell(Text(publictreasury
+                                                .totalValueUsd
+                                                .toString()))
+                                          ])
+                                        ]),
+                                      )
+                                    ],
+                                  );
+                                }
+                                return const Text("");
+                              })
+                        else
+                          Text('')
                       ],
                     );
                   }

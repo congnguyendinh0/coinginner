@@ -1,5 +1,6 @@
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
+import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

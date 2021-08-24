@@ -13,10 +13,10 @@ class Exchange {
   String? url;
 
   @JsonKey(name: 'year_established')
-  double? yearEstablished;
+  int? yearEstablished;
 
   @JsonKey(name: 'trust_score_rank')
-  double? trustScoreRank;
+  int? trustScoreRank;
 
   @JsonKey(name: 'trade_volume_24h_btc_normalized')
   double? tradeVolume24hBtcNormalized;
