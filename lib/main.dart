@@ -2,6 +2,7 @@ import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
+import 'package:coinginner_flutter/screens/news_screen_update.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,10 +35,21 @@ class MyApp extends StatelessWidget {
         cardTheme: CardTheme(
           color: Color(0xffF72585),
         ),
+        chipTheme: ChipThemeData(
+          secondaryLabelStyle: TextStyle(color: Colors.white),
+          brightness: Brightness.light,
+          padding: EdgeInsets.all(3),
+          secondarySelectedColor: Color(0xffF72585),
+          backgroundColor: Color(0xffF72585),
+          labelStyle: TextStyle(color: Colors.white),
+          showCheckmark: false,
+          disabledColor: Color(0xffF72585),
+          selectedColor: Color(0xffF72585),
+        ),
         buttonTheme: ButtonThemeData(buttonColor: Color(0xffF72585)),
       ),
       //home: const MyHomePage(title: 'Coinginner'),
-      home: SearchScreen(),
+      home: CoinScreen(),
     );
   }
 }

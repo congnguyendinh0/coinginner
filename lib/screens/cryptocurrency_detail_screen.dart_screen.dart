@@ -55,16 +55,19 @@ class CoinDetailScreen extends StatelessWidget {
               backgroundColor: Colors.purple,
               radius: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Text(
-                cryptocurrency.name +
-                    "(" +
-                    cryptocurrency.symbol +
-                    ")"
-                        " #" +
-                    cryptocurrency.marketCapRank.toInt().toString(),
-                style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
+                child: Text(
+                  cryptocurrency.name +
+                      "(" +
+                      cryptocurrency.symbol +
+                      ")"
+                          " #" +
+                      cryptocurrency.marketCapRank.toInt().toString(),
+                  style:
+                      TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis),
+                ),
               ),
             ),
           ],
@@ -83,13 +86,46 @@ class CoinDetailScreen extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
-              child: SfSparkLineChart(
-                  axisLineColor: Colors.white,
-                  axisLineDashArray: <double>[10, 3],
-                  trackball: SparkChartTrackball(
-                      activationMode: SparkChartActivationMode.tap),
-                  data: data,
-                  color: Colors.white),
+              child: Column(
+                children: [
+                  Row(children: [
+                    Spacer(),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 5, 10),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor:
+                              cryptocurrency.priceChangePercentage24h > 0
+                                  ? Colors.teal
+                                  : Color(0xffF72585),
+                          onSurface: Colors.grey,
+                          textStyle: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: cryptocurrency.priceChangePercentage24h > 0
+                            ? Text('\u{25B2}' +
+                                cryptocurrency.priceChangePercentage24h
+                                    .toStringAsFixed(2) +
+                                '%')
+                            : Text('\u{25BC}' +
+                                cryptocurrency.priceChangePercentage24h
+                                    .toStringAsFixed(2) +
+                                '%'),
+                      ),
+                    ),
+                  ]),
+                  SfSparkLineChart(
+                      axisLineColor: Colors.white,
+                      axisLineDashArray: <double>[10, 3],
+                      trackball: SparkChartTrackball(
+                          activationMode: SparkChartActivationMode.tap),
+                      data: data,
+                      color: Colors.white),
+                ],
+              ),
             ),
             FutureBuilder<Coinextra>(
               future: getCoinextra(id: cryptocurrency.id),
@@ -136,30 +172,30 @@ class CoinDetailScreen extends StatelessWidget {
                         //Text(coinextra.genesisDate ?? ""),
                         Divider(),
 
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        ExpansionTile(
+                            title: Text('CATEGORIES',
+                                style: TextStyle(color: Colors.white)),
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("CATEGORIES",
-                                    textAlign: TextAlign.start),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    for (var item in categories ?? [])
+                                      Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Expanded(
+                                          child: Chip(
+                                              label: Text(item,
+                                                  style:
+                                                      TextStyle(fontSize: 8))),
+                                        ),
+                                      )
+                                  ],
+                                ),
                               ),
-                              Row(
-                                children: <Widget>[
-                                  for (var item in categories ?? [])
-                                    Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Chip(
-                                          label: Text(item,
-                                              style: TextStyle(fontSize: 8))),
-                                    )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                            ]),
 /*                         //if (cryptocurrency.id == 'bitcoin') {}
                         if (cryptocurrency.name.toLowerCase() == 'bitcoin' ||
                             cryptocurrency.name.toLowerCase() == 'ethereum')
