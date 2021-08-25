@@ -24,9 +24,9 @@ class CoinDetailScreen extends StatelessWidget {
   }
 
   static Future<PublicTreasury> getPublicTreasury(
-      {String name = "bitcoin"}) async {
+      {String id = "bitcoin"}) async {
     var response = await Dio().get(
-        "https://api.coingecko.com/api/v3/companies/public_treasury/${name}");
+        "https://api.coingecko.com/api/v3/companies/public_treasury/${id}");
 
     if (response.statusCode == 200) {
       PublicTreasury publicTreasury = PublicTreasury.fromJson(response.data);
@@ -89,41 +89,63 @@ class CoinDetailScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Row(children: [
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 5, 10),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          primary: Colors.white,
-                          backgroundColor:
-                              cryptocurrency.priceChangePercentage24h > 0
-                                  ? Colors.teal
-                                  : Color(0xffF72585),
-                          onSurface: Colors.grey,
-                          textStyle: TextStyle(
-                            fontSize: 10,
+                    Expanded(
+                        child: ListTile(
+                      title: Text(
+                        cryptocurrency.currentPrice.toStringAsFixed(4),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )),
+                    Column(
+                      children: [
+                        Text(
+                          'TODAY',
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 5, 10),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(30, 30),
+                              padding: EdgeInsets.all(5),
+                              primary: Colors.white,
+                              backgroundColor:
+                                  cryptocurrency.priceChangePercentage24h > 0
+                                      ? Colors.teal
+                                      : Color(0xffF72585),
+                              onSurface: Colors.grey,
+                              textStyle: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: cryptocurrency.priceChangePercentage24h > 0
+                                ? Text('\u{25B2}' +
+                                    cryptocurrency.priceChangePercentage24h
+                                        .toStringAsFixed(2) +
+                                    '%')
+                                : Text('\u{25BC}' +
+                                    cryptocurrency.priceChangePercentage24h
+                                        .toStringAsFixed(2) +
+                                    '%'),
                           ),
                         ),
-                        onPressed: () {},
-                        child: cryptocurrency.priceChangePercentage24h > 0
-                            ? Text('\u{25B2}' +
-                                cryptocurrency.priceChangePercentage24h
-                                    .toStringAsFixed(2) +
-                                '%')
-                            : Text('\u{25BC}' +
-                                cryptocurrency.priceChangePercentage24h
-                                    .toStringAsFixed(2) +
-                                '%'),
-                      ),
+                      ],
                     ),
                   ]),
-                  SfSparkLineChart(
-                      axisLineColor: Colors.white,
-                      axisLineDashArray: <double>[10, 3],
-                      trackball: SparkChartTrackball(
-                          activationMode: SparkChartActivationMode.tap),
-                      data: data,
-                      color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 50.0),
+                    child: SfSparkLineChart(
+                        axisLineColor: Colors.white,
+                        axisLineDashArray: <double>[10, 3],
+                        trackball: SparkChartTrackball(
+                            activationMode: SparkChartActivationMode.tap),
+                        data: data,
+                        color: Colors.white),
+                  ),
                 ],
               ),
             ),
@@ -196,44 +218,42 @@ class CoinDetailScreen extends StatelessWidget {
                                 ),
                               ),
                             ]),
-/*                         //if (cryptocurrency.id == 'bitcoin') {}
-                        if (cryptocurrency.name.toLowerCase() == 'bitcoin' ||
-                            cryptocurrency.name.toLowerCase() == 'ethereum')
-                          FutureBuilder<PublicTreasury>(
-                              future:
-                                  getPublicTreasury(name: cryptocurrency.name),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<PublicTreasury> snapshot) {
-                                if (snapshot.hasData) {
-                                  var publictreasury = snapshot.data;
-                                  return ExpansionTile(
-                                    title: Text(
-                                        'Companies that own ${cryptocurrency.name}'),
-                                    children: [
-                                      Expanded(
-                                        child: DataTable(columns: [
-                                          DataColumn(
-                                              label: Text('total holdings')),
-                                          DataColumn(
-                                              label: Text('total Value Usd'))
-                                        ], rows: [
-                                          DataRow(cells: [
-                                            DataCell(Text(publictreasury!
-                                                .totalHoldings
-                                                .toString())),
-                                            DataCell(Text(publictreasury
-                                                .totalValueUsd
-                                                .toString()))
-                                          ])
-                                        ]),
-                                      )
-                                    ],
-                                  );
-                                }
-                                return const Text("");
-                              })
-                        else
-                          Text('') */
+
+                        ListTile(
+                          title: Text('MARKET CAP'),
+                          subtitle: Text(cryptocurrency.marketCap.toString()),
+                        ),
+                        ListTile(
+                          title: Text('TRADING VOLUME'),
+                          subtitle: Text(cryptocurrency.totalVolume.toString()),
+                        ),
+                        ListTile(
+                          title: Text('CIRCULATING SUPPLY'),
+                          subtitle:
+                              Text(cryptocurrency.circulatingSupply.toString()),
+                        )
+                      ],
+                    );
+                  }
+                }
+                return const Text("");
+              },
+            ),
+            FutureBuilder<PublicTreasury>(
+              future: getPublicTreasury(id: cryptocurrency.id),
+              builder: (BuildContext context,
+                  AsyncSnapshot<PublicTreasury> snapshot) {
+                if (snapshot.hasData) {
+                  var publicTreasury = snapshot.data;
+                  var companies = publicTreasury?.companies;
+                  if (publicTreasury != null) {
+                    return Column(
+                      children: [
+                        ListTile(
+                            title: Text('Public Treasury'),
+                            subtitle: Text(
+                                '''Total Value: ${publicTreasury.totalValueUsd}USD \nTotal holdings: ${publicTreasury.totalHoldings}BTC 
+                                ''')),
                       ],
                     );
                   }
