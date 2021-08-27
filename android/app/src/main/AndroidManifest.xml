@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.coinginner_flutter">
    <application
-        android:label="coinginner_flutter"
+        android:label="Coinginner"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
@@ -37,5 +37,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
     </application>
+    <queries>
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="https" />
+      </intent>
+    </queries>
 </manifest>

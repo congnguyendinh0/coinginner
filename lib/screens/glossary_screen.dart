@@ -6,6 +6,7 @@ class GlossaryScreen extends StatelessWidget {
   const GlossaryScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //tutorial: https://www.youtube.com/watch?v=WuYOGBEOEOo&ab_channel=LearnFlutterwithMe
     // firebase collection access
     CollectionReference glossary =
         FirebaseFirestore.instance.collection('glossary');

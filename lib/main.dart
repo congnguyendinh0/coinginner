@@ -3,6 +3,7 @@ import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:coinginner_flutter/screens/dropdown_screen.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
+import 'package:coinginner_flutter/screens/homescreen.dart';
 import 'package:coinginner_flutter/screens/news_screen_update.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
         buttonTheme: ButtonThemeData(buttonColor: Color(0xffF72585)),
       ),
       //home: const MyHomePage(title: 'Coinginner'),
-      home: NewsScreenUpdate(),
+      home: Homescreen(),
+      getPages: [GetPage(name: "/", page: () => Homescreen())],
     );
   }
 }

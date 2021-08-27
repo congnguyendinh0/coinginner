@@ -313,39 +313,9 @@ class NewsScreenUpdate extends StatelessWidget {
                                             style:
                                                 TextStyle(color: Colors.white)),
                                         subtitle: Text(
-                                            '''ACTIVE CRYPTOS: ${NumberFormat.compactCurrency(decimalDigits: 1, symbol: '').format(data?.activeCryptocurrencies)}\nONGOING ICOs: ${data?.ongoingIcos}\nUPCOMING ICOs: ${data?.upcomingIcos}\nMARKETS: ${data?.markets}\nMARKET CAP: ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'USD').format(totalMarketCap?.usd)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'EURO ').format(totalMarketCap?.eur)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'VND ').format(totalMarketCap?.vnd)}\nBITCOIN DOMINANCE:${data!.marketCapPercentage!.btc}%''',
+                                            '''ACTIVE CRYPTOS: ${NumberFormat.compactCurrency(decimalDigits: 1, symbol: '').format(data?.activeCryptocurrencies)}\nONGOING ICOs: ${data?.ongoingIcos}\nUPCOMING ICOs: ${data?.upcomingIcos}\nMARKETS: ${data?.markets}\nMARKET CAP: ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'USD').format(totalMarketCap?.usd)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'EURO ').format(totalMarketCap?.eur)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'VND ').format(totalMarketCap?.vnd)}\nBITCOIN DOMINANCE:${data!.marketCapPercentage!.btc!.roundToDouble()}%''',
                                             style: TextStyle(
                                                 color: Colors.white))),
-                                  ],
-                                );
-                              }
-                            }
-                          }
-                          return const Text("");
-                        },
-                      ),
-                      FutureBuilder<GasOracle>(
-                        future: GasService.getFee(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<GasOracle> snapshot) {
-                          if (snapshot.hasData) {
-                            var gasoracle = snapshot.data;
-
-                            if (gasoracle != null) {
-                              if (gasoracle.result != null) {
-                                var result = gasoracle.result;
-                                return Column(
-                                  children: [
-                                    Card(
-                                      child: ListTile(
-                                          title: Text('ETH GAS FEE',
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                          subtitle: Text(
-                                              "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
-                                              style: TextStyle(
-                                                  color: Colors.white))),
-                                    ),
                                   ],
                                 );
                               }
