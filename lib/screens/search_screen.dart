@@ -299,7 +299,7 @@ class SearchScreen extends StatelessWidget {
                       );
                     }
                   }
-                  return const Text("hello");
+                  return const Text("");
                 },
               ),
             ]),

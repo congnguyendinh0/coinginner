@@ -13,5 +13,5 @@ Defi _$DefiFromJson(Map<String, dynamic> json) => Defi(
     );
 
 Map<String, dynamic> _$DefiToJson(Defi instance) => <String, dynamic>{
-      'data': instance.data,
+      'data': instance.data?.toJson(),
     };

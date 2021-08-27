@@ -1,8 +1,10 @@
 import 'package:coinginner_flutter/models/companies/publictreasury.dart';
+import 'package:coinginner_flutter/models/ethgas/gasoracle.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:coinginner_flutter/services/http_coinextra_service.dart';
+import 'package:coinginner_flutter/services/http_ethgas_service.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -313,7 +315,38 @@ class CoinDetailScreen extends StatelessWidget {
                                   subtitle: Text(
                                       "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}"))
                           ],
-                        )
+                        ),
+                        if (cryptocurrency.id == 'ethereum')
+                          FutureBuilder<GasOracle>(
+                            future: GasService.getFee(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<GasOracle> snapshot) {
+                              if (snapshot.hasData) {
+                                var gasoracle = snapshot.data;
+
+                                if (gasoracle != null) {
+                                  if (gasoracle.result != null) {
+                                    var result = gasoracle.result;
+                                    return Column(
+                                      children: [
+                                        Card(
+                                          child: ListTile(
+                                              title: Text('ETH GAS FEE',
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
+                                              subtitle: Text(
+                                                  "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
+                                                  style: TextStyle(
+                                                      color: Colors.white))),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                }
+                              }
+                              return const Text("");
+                            },
+                          ),
                       ],
                     );
                   }

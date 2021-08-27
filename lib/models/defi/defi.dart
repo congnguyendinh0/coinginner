@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'defi.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Defi {
   Data? data;
 

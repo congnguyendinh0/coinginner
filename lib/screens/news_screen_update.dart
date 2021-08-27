@@ -1,5 +1,7 @@
+import 'package:coinginner_flutter/models/ethgas/gasoracle.dart';
 import 'package:coinginner_flutter/models/global/global.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
+import 'package:coinginner_flutter/services/http_ethgas_service.dart';
 import 'package:coinginner_flutter/services/http_global_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/http_news_service.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NewsScreenUpdate extends StatelessWidget {
   const NewsScreenUpdate({Key? key}) : super(key: key);
@@ -310,7 +313,7 @@ class NewsScreenUpdate extends StatelessWidget {
                                             style:
                                                 TextStyle(color: Colors.white)),
                                         subtitle: Text(
-                                            '''ACTIVE CRYPTOS: ${NumberFormat.compactCurrency(decimalDigits: 1, symbol: '').format(data?.activeCryptocurrencies)}\nONGOING ICOs: ${data?.ongoingIcos}\nUPCOMING ICOs: ${data?.upcomingIcos}\nMARKETS: ${data?.markets}\nMARKET CAP: ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'USD').format(totalMarketCap?.usd)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'EURO ').format(totalMarketCap?.eur)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'VND ').format(totalMarketCap?.vnd)}''',
+                                            '''ACTIVE CRYPTOS: ${NumberFormat.compactCurrency(decimalDigits: 1, symbol: '').format(data?.activeCryptocurrencies)}\nONGOING ICOs: ${data?.ongoingIcos}\nUPCOMING ICOs: ${data?.upcomingIcos}\nMARKETS: ${data?.markets}\nMARKET CAP: ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'USD').format(totalMarketCap?.usd)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'EURO ').format(totalMarketCap?.eur)} ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: 'VND ').format(totalMarketCap?.vnd)}\nBITCOIN DOMINANCE:${data!.marketCapPercentage!.btc}%''',
                                             style: TextStyle(
                                                 color: Colors.white))),
                                   ],
@@ -321,8 +324,38 @@ class NewsScreenUpdate extends StatelessWidget {
                           return const Text("");
                         },
                       ),
+                      FutureBuilder<GasOracle>(
+                        future: GasService.getFee(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<GasOracle> snapshot) {
+                          if (snapshot.hasData) {
+                            var gasoracle = snapshot.data;
+
+                            if (gasoracle != null) {
+                              if (gasoracle.result != null) {
+                                var result = gasoracle.result;
+                                return Column(
+                                  children: [
+                                    Card(
+                                      child: ListTile(
+                                          title: Text('ETH GAS FEE',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                          subtitle: Text(
+                                              "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
+                                              style: TextStyle(
+                                                  color: Colors.white))),
+                                    ),
+                                  ],
+                                );
+                              }
+                            }
+                          }
+                          return const Text("");
+                        },
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             )));
