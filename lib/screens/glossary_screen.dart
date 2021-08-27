@@ -6,6 +6,7 @@ class GlossaryScreen extends StatelessWidget {
   const GlossaryScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // firebase collection access
     CollectionReference glossary =
         FirebaseFirestore.instance.collection('glossary');
     return SafeArea(
@@ -15,6 +16,7 @@ class GlossaryScreen extends StatelessWidget {
         ),
         body: Center(
           child: StreamBuilder(
+              // orders words  by name
               stream: glossary.orderBy('word').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {

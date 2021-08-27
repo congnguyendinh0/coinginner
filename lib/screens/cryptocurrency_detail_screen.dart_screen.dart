@@ -1,5 +1,8 @@
 import 'package:coinginner_flutter/models/companies/publictreasury.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
+import 'package:coinginner_flutter/screens/glossary_screen.dart';
+import 'package:coinginner_flutter/screens/search_screen.dart';
+import 'package:coinginner_flutter/services/http_coinextra_service.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -11,18 +14,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CoinDetailScreen extends StatelessWidget {
-  static Future<Coinextra> getCoinextra({String id = "bitcoin"}) async {
-    var response = await Dio().get(
-        "https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false");
-
-    if (response.statusCode == 200) {
-      Coinextra coinextra = Coinextra.fromJson(response.data);
-      return coinextra;
-    } else {
-      throw Exception("Error");
-    }
-  }
-
   static Future<PublicTreasury> getPublicTreasury(
       {String id = "bitcoin"}) async {
     var response = await Dio().get(
@@ -77,6 +68,13 @@ class CoinDetailScreen extends StatelessWidget {
             icon: const Icon(Icons.bookmark_add),
             tooltip: 'save',
             onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: 'search',
+            onPressed: () {
+              Get.to(SearchScreen());
+            },
           ),
         ],
       ),
@@ -150,7 +148,7 @@ class CoinDetailScreen extends StatelessWidget {
               ),
             ),
             FutureBuilder<Coinextra>(
-              future: getCoinextra(id: cryptocurrency.id),
+              future: CoinextraService.getCoinextra(id: cryptocurrency.id),
               builder:
                   (BuildContext context, AsyncSnapshot<Coinextra> snapshot) {
                 if (snapshot.hasData) {
@@ -183,6 +181,7 @@ class CoinDetailScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(20.0),
                               child: Text(
 
+                                  // replaces all html tags
                                   // https://stackoverflow.com/questions/51593790/remove-html-tags-from-a-string-in-dart
                                   text?.en?.replaceAll(
                                           RegExp(r'<[^>]*>|&[^;]+;'), '') ??
@@ -191,9 +190,6 @@ class CoinDetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        //Text(coinextra.genesisDate ?? ""),
-                        Divider(),
-
                         ExpansionTile(
                             title: Text('CATEGORIES',
                                 style: TextStyle(color: Colors.white)),
@@ -204,12 +200,12 @@ class CoinDetailScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    for (var item in categories ?? [])
+                                    for (var category in categories ?? [])
                                       Padding(
                                         padding: const EdgeInsets.all(3.0),
                                         child: Expanded(
                                           child: Chip(
-                                              label: Text(item,
+                                              label: Text(category,
                                                   style:
                                                       TextStyle(fontSize: 8))),
                                         ),
@@ -218,20 +214,69 @@ class CoinDetailScreen extends StatelessWidget {
                                 ),
                               ),
                             ]),
-
-                        ListTile(
-                          title: Text('MARKET CAP'),
-                          subtitle: Text(cryptocurrency.marketCap.toString()),
+                        ExpansionTile(
+                          title: Text('LINKS',
+                              style: TextStyle(color: Colors.white)),
+                          children: [
+                            ListTile(
+                                title: Text("HOMEPAGE",
+                                    style: TextStyle(color: Colors.white)),
+                                subtitle: Text(coinextra.links!.homepage![0],
+                                    style: TextStyle(color: Colors.white))),
+                            ListTile(
+                                title: Text("TWITTER",
+                                    style: TextStyle(color: Colors.white)),
+                                subtitle: Text(
+                                    "@" + coinextra.links!.twitterScreenName!,
+                                    style: TextStyle(color: Colors.white)))
+                          ],
                         ),
                         ListTile(
-                          title: Text('TRADING VOLUME'),
-                          subtitle: Text(cryptocurrency.totalVolume.toString()),
+                          title: Text(
+                            'MARKET CAP',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            NumberFormat.compactCurrency(
+                                    decimalDigits: 4, symbol: '')
+                                .format(cryptocurrency.marketCap),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                         ListTile(
-                          title: Text('CIRCULATING SUPPLY'),
+                          title: Text(
+                            'TRADING VOLUME',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(NumberFormat.compactCurrency(
+                                  decimalDigits: 4, symbol: "")
+                              .format(cryptocurrency.totalVolume)),
+                        ),
+                        ListTile(
+                          title: Text(
+                            'CIRCULATING SUPPLY',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                           subtitle:
                               Text(cryptocurrency.circulatingSupply.toString()),
-                        )
+                        ),
+                        ListTile(
+                          title: Text(
+                            'TOTAL SUPPLY',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(cryptocurrency.totalSupply.toString()),
+                        ),
                       ],
                     );
                   }
@@ -245,22 +290,48 @@ class CoinDetailScreen extends StatelessWidget {
                   AsyncSnapshot<PublicTreasury> snapshot) {
                 if (snapshot.hasData) {
                   var publicTreasury = snapshot.data;
-                  var companies = publicTreasury?.companies;
+                  var companies = publicTreasury!.companies;
                   if (publicTreasury != null) {
                     return Column(
                       children: [
-                        ListTile(
-                            title: Text('Public Treasury'),
-                            subtitle: Text(
-                                '''Total Value: ${publicTreasury.totalValueUsd}USD \nTotal holdings: ${publicTreasury.totalHoldings}BTC 
-                                ''')),
+                        Column(
+                          children: [
+                            ListTile(
+                                title: Text('Public Treasury'),
+                                subtitle: Text(
+                                    '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
+                                    ''')),
+                          ],
+                        ),
+                        ExpansionTile(
+                          title:
+                              Text("COMPANIES THAT OWN ${cryptocurrency.name}"),
+                          children: [
+                            for (var company in companies!)
+                              ListTile(
+                                  title: Text(company.name!),
+                                  subtitle: Text(
+                                      "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}"))
+                          ],
+                        )
                       ],
                     );
                   }
                 }
                 return const Text("");
               },
-            )
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xffF72585)),
+                  onPressed: () {
+                    Get.to(GlossaryScreen());
+                  },
+                  child: const Text("DONT'T UNDERSTAND A TERM?",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+            ),
           ]),
         ),
       ),

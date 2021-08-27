@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:coinginner_flutter/models/exchanges/exchange.dart';
+import 'package:intl/intl.dart';
 
 import '../services/http_exchange_service.dart';
 
@@ -52,9 +53,12 @@ class ExchangeListScreen extends StatelessWidget {
                                       '# ' + exchange.trustScoreRank.toString(),
                                       maxLines: 1,
                                     ),
-                                    subtitle: Text(exchange
-                                        .tradeVolume24hBtcNormalized
-                                        .toString()),
+                                    subtitle: Text('24H BTC VOLUME ' +
+                                        NumberFormat.compactCurrency(
+                                                decimalDigits: 3, symbol: '')
+                                            .format(exchange
+                                                .tradeVolume24hBtcNormalized)
+                                            .toString()),
                                   ))
                             ]),
                           ));

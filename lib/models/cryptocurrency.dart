@@ -26,6 +26,8 @@ class Cryptocurrency {
   dynamic roi = 0;
   String lastUpdated = "";
   double priceChangePercentage7dInCurrency = 0;
+  double priceChangePercentage30dInCurrency = 0;
+  double priceChangePercentage1yInCurrency = 0;
   Map<String, dynamic> sparkline = Map();
   // Sparkline sparkline;
 
@@ -87,6 +89,7 @@ class Cryptocurrency {
     this.lastUpdated = lastUpdated ?? "";
     this.priceChangePercentage7dInCurrency =
         priceChangePercentage7dInCurrency ?? 0;
+
     this.sparkline = sparkline ?? Map();
 
     // pruefen
@@ -94,39 +97,39 @@ class Cryptocurrency {
 
   factory Cryptocurrency.fromJSON(Map<String, dynamic> json) {
     return Cryptocurrency(
-        id: json["id"],
-        symbol: json["symbol"],
-        name: json["name"],
-        image: json["image"],
-        currentPrice: (json["current_price"]).toDouble(),
-        marketCap: (json["market_cap"]).toDouble(),
-        marketCapRank: (json["market_cap_rank"]).toDouble(),
-        fullyDilutedValuation:
-            (json["fully_diluted_valuation"])?.toDouble() ?? 0,
-        totalVolume: (json["total_volume"]).toDouble(),
-        high24h: (json["high_24h"]).toDouble(),
-        low24h: (json["low_24h"]).toDouble(),
-        priceChange24h: (json["price_change_24h"]).toDouble(),
-        priceChangePercentage24h:
-            (json["price_change_percentage_24h"]).toDouble(),
-        marketCapChange24h: (json["market_cap_change_24h"]).toDouble(),
-        marketCapChangePercentage24h:
-            (json["market_cap_change_percentage_24h"]).toDouble(),
-        circulatingSupply: (json["circulating_supply"]).toDouble(),
-        totalSupply: (json["total_supply"])?.toDouble() ?? 0.0,
-        maxSupply: (json["max_supply"])?.toDouble() ?? 0.0,
-        ath: (json["ath"]).toDouble(),
-        athChangePercentage: (json["ath_change_percentage"]).toDouble(),
-        athDate: json["ath_date"],
-        atl: (json["atl"]).toDouble(),
-        atlChangePercentage: (json["atl_change_percentage"]).toDouble(),
-        atlDate: json["atl_date"],
-        roi: json["roi"],
-        lastUpdated: json["last_updated"],
-        //pruefen
-        sparkline: json["sparkline_in_7d"],
-        priceChangePercentage7dInCurrency:
-            (json["price_change_percentage_7d_in_currency"]).toDouble());
+      id: json["id"],
+      symbol: json["symbol"],
+      name: json["name"],
+      image: json["image"],
+      currentPrice: (json["current_price"]).toDouble(),
+      marketCap: (json["market_cap"]).toDouble(),
+      marketCapRank: (json["market_cap_rank"]).toDouble(),
+      fullyDilutedValuation: (json["fully_diluted_valuation"])?.toDouble() ?? 0,
+      totalVolume: (json["total_volume"]).toDouble(),
+      high24h: (json["high_24h"]).toDouble(),
+      low24h: (json["low_24h"]).toDouble(),
+      priceChange24h: (json["price_change_24h"]).toDouble(),
+      priceChangePercentage24h:
+          (json["price_change_percentage_24h"]).toDouble(),
+      marketCapChange24h: (json["market_cap_change_24h"]).toDouble(),
+      marketCapChangePercentage24h:
+          (json["market_cap_change_percentage_24h"]).toDouble(),
+      circulatingSupply: (json["circulating_supply"]).toDouble(),
+      totalSupply: (json["total_supply"])?.toDouble() ?? 0.0,
+      maxSupply: (json["max_supply"])?.toDouble() ?? 0.0,
+      ath: (json["ath"]).toDouble(),
+      athChangePercentage: (json["ath_change_percentage"]).toDouble(),
+      athDate: json["ath_date"],
+      atl: (json["atl"]).toDouble(),
+      atlChangePercentage: (json["atl_change_percentage"]).toDouble(),
+      atlDate: json["atl_date"],
+      roi: json["roi"],
+      lastUpdated: json["last_updated"],
+      //pruefen
+      sparkline: json["sparkline_in_7d"],
+      priceChangePercentage7dInCurrency:
+          (json["price_change_percentage_7d_in_currency"]).toDouble(),
+    );
   }
 }
 
