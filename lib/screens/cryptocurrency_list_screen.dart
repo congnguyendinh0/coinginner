@@ -1,5 +1,6 @@
 import 'package:coinginner_flutter/controllers/dropdown_controller.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
@@ -15,19 +16,24 @@ class CoinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
         appBar: AppBar(
-          title: Text(dropdownController.orderDropdownValue.value),
+          title: Text("COIN LIST"),
           actions: [
             DropdownButton<String>(
+              dropdownColor: Color(0xff340b93),
+              icon: const Icon(Icons.arrow_drop_down),
               value: dropdownController.orderDropdownValue.value,
               items: <String>[
                 'market_cap_asc',
                 'market_cap_desc',
                 'volume_asc',
                 'volume_desc'
-              ].map<DropdownMenuItem<String>>((String category) {
+              ].map<DropdownMenuItem<String>>((String order) {
                 return DropdownMenuItem(
-                  value: category,
-                  child: Text(category),
+                  value: order,
+                  child: Text(
+                    order.replaceAll(RegExp('[/_/g]'), ' ').toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
                 );
               }).toList(),
               onChanged: (order) => dropdownController.setValue(order!),
@@ -35,7 +41,8 @@ class CoinScreen extends StatelessWidget {
           ],
         ),
         body: FutureBuilder(
-          future: CoinService.getCryptocurrencyList(),
+          future: CoinService().getCryptocurrencyList(
+              order: dropdownController.orderDropdownValue.value),
           builder: (BuildContext context,
               AsyncSnapshot<List<Cryptocurrency>> snapshot) {
             switch (snapshot.connectionState) {
@@ -71,7 +78,7 @@ class CoinScreen extends StatelessWidget {
                                     onTap: () {
                                       //without getx
                                       //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
-                                      Navigator.push(
+                                      /*  Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -79,7 +86,11 @@ class CoinScreen extends StatelessWidget {
                                                     cryptocurrency:
                                                         cryptoCurrencyList[
                                                             index])),
-                                      );
+                                      ); */
+
+                                      Get.to(() => CoinDetailScreen(
+                                          cryptocurrency:
+                                              cryptoCurrencyList[index]));
                                     },
                                   )),
                               Expanded(

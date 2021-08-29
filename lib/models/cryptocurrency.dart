@@ -90,7 +90,7 @@ class Cryptocurrency {
     this.priceChangePercentage7dInCurrency =
         priceChangePercentage7dInCurrency ?? 0;
 
-    this.sparkline = sparkline ?? Map();
+    this.sparkline = sparkline ?? {};
 
     // pruefen
   }
@@ -101,34 +101,34 @@ class Cryptocurrency {
       symbol: json["symbol"],
       name: json["name"],
       image: json["image"],
-      currentPrice: (json["current_price"]).toDouble(),
-      marketCap: (json["market_cap"]).toDouble(),
-      marketCapRank: (json["market_cap_rank"]).toDouble(),
+      currentPrice: (json["current_price"])?.toDouble() ?? 0,
+      marketCap: (json["market_cap"])?.toDouble() ?? 0,
+      marketCapRank: (json["market_cap_rank"])?.toDouble() ?? 0.0,
       fullyDilutedValuation: (json["fully_diluted_valuation"])?.toDouble() ?? 0,
-      totalVolume: (json["total_volume"]).toDouble(),
-      high24h: (json["high_24h"]).toDouble(),
-      low24h: (json["low_24h"]).toDouble(),
-      priceChange24h: (json["price_change_24h"]).toDouble(),
+      totalVolume: (json["total_volume"])?.toDouble() ?? 0,
+      high24h: (json["high_24h"])?.toDouble() ?? 0,
+      low24h: (json["low_24h"])?.toDouble() ?? 0,
+      priceChange24h: (json["price_change_24h"])?.toDouble() ?? 0,
       priceChangePercentage24h:
-          (json["price_change_percentage_24h"]).toDouble(),
-      marketCapChange24h: (json["market_cap_change_24h"]).toDouble(),
+          (json["price_change_percentage_24h"])?.toDouble() ?? 0,
+      marketCapChange24h: (json["market_cap_change_24h"])?.toDouble() ?? 0,
       marketCapChangePercentage24h:
-          (json["market_cap_change_percentage_24h"]).toDouble(),
-      circulatingSupply: (json["circulating_supply"]).toDouble(),
+          (json["market_cap_change_percentage_24h"])?.toDouble() ?? 0,
+      circulatingSupply: (json["circulating_supply"])?.toDouble() ?? 0,
       totalSupply: (json["total_supply"])?.toDouble() ?? 0.0,
       maxSupply: (json["max_supply"])?.toDouble() ?? 0.0,
-      ath: (json["ath"]).toDouble(),
-      athChangePercentage: (json["ath_change_percentage"]).toDouble(),
-      athDate: json["ath_date"],
-      atl: (json["atl"]).toDouble(),
-      atlChangePercentage: (json["atl_change_percentage"]).toDouble(),
-      atlDate: json["atl_date"],
+      ath: (json["ath"])?.toDouble() ?? 0.0,
+      athChangePercentage: (json["ath_change_percentage"])?.toDouble() ?? 0,
+      athDate: json["ath_date"] ?? '',
+      atl: (json["atl"])?.toDouble() ?? 0,
+      atlChangePercentage: (json["atl_change_percentage"])?.toDouble() ?? 0,
+      atlDate: json["atl_date"] ?? '',
       roi: json["roi"],
       lastUpdated: json["last_updated"],
       //pruefen
       sparkline: json["sparkline_in_7d"],
       priceChangePercentage7dInCurrency:
-          (json["price_change_percentage_7d_in_currency"]).toDouble(),
+          (json["price_change_percentage_7d_in_currency"])?.toDouble() ?? 0,
     );
   }
 }

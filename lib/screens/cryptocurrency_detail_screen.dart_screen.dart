@@ -75,7 +75,7 @@ class CoinDetailScreen extends StatelessWidget {
             icon: const Icon(Icons.search),
             tooltip: 'search',
             onPressed: () {
-              Get.to(SearchScreen());
+              Get.offNamed('/search');
             },
           ),
         ],
@@ -168,7 +168,7 @@ class CoinDetailScreen extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xffF72585)),
                               onPressed: () {
-                                Get.to(ExchangeListScreen());
+                                Get.offNamed('/exchangelist');
                               },
                               child: const Text('BUY ON THESE EXCHANGES',
                                   style:
@@ -360,7 +360,7 @@ class CoinDetailScreen extends StatelessWidget {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Color(0xffF72585)),
                   onPressed: () {
-                    Get.to(GlossaryScreen());
+                    Get.toNamed('/glossary');
                   },
                   child: const Text("DONT'T UNDERSTAND A TERM?",
                       style: TextStyle(fontWeight: FontWeight.bold))),

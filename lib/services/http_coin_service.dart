@@ -31,12 +31,10 @@ import 'dart:convert';
  */
 
 class CoinService {
-  static String get CRYPTOCURRENCIES {
-    return "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=7d";
-  }
-
-  static Future<List<Cryptocurrency>> getCryptocurrencyList() async {
-    Response response = await Dio().get(CoinService.CRYPTOCURRENCIES);
+  Future<List<Cryptocurrency>> getCryptocurrencyList(
+      {String order = 'market_cap_desc'}) async {
+    var response = await Dio().get(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=$order&per_page=250&page=1&sparkline=true&price_change_percentage=7d');
 
     if (response.statusCode == 200) {
       List<dynamic> responseList = response.data;

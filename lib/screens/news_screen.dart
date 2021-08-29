@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import '../services/http_news_service.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
 
+// First version of newsscreen
 class NewsScreen extends StatelessWidget {
   const NewsScreen({Key? key}) : super(key: key);
 

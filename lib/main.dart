@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         cardTheme: CardTheme(
           color: Color(0xffF72585),
         ),
+        bottomAppBarColor: Color(0xff340b93),
         chipTheme: ChipThemeData(
           secondaryLabelStyle: TextStyle(color: Colors.white),
           brightness: Brightness.light,
@@ -50,11 +51,18 @@ class MyApp extends StatelessWidget {
           disabledColor: Color(0xffF72585),
           selectedColor: Color(0xffF72585),
         ),
-        buttonTheme: ButtonThemeData(buttonColor: Color(0xffF72585)),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Color(0xffF72585),
+        ),
       ),
-      //home: const MyHomePage(title: 'Coinginner'),
       home: Homescreen(),
-      getPages: [GetPage(name: "/", page: () => Homescreen())],
+      getPages: [
+        GetPage(name: "/", page: () => Homescreen()),
+        GetPage(name: "/coinlist", page: () => CoinScreen()),
+        GetPage(name: "/search", page: () => SearchScreen()),
+        GetPage(name: "/explore", page: () => NewsScreenUpdate()),
+        GetPage(name: "/glossary", page: () => GlossaryScreen()),
+      ],
     );
   }
 }

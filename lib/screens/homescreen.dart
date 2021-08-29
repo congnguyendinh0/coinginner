@@ -1,4 +1,5 @@
 import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
+import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
 import 'package:coinginner_flutter/screens/news_screen_update.dart';
@@ -21,7 +22,8 @@ class Homescreen extends StatelessWidget {
               CoinScreen(),
               SearchScreen(),
               NewsScreenUpdate(),
-              GlossaryScreen()
+              GlossaryScreen(),
+              ExchangeListScreen()
             ],
           ),
         ),

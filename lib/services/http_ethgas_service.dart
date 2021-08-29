@@ -5,6 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GasService {
   static Future<GasOracle> getFee() async {
+    // get key from .env
+    // returns an gasoracle
     String key = dotenv.get('KEY');
     var response = await Dio().get(
         "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=$key");
