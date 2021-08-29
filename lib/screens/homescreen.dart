@@ -28,26 +28,33 @@ class Homescreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          elevation: 3,
+          unselectedItemColor: Colors.white,
+          selectedItemColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Color(0xff340b93),
+          elevation: 3,
           currentIndex: controller.tabIndex,
           onTap: controller.changeTabIndex,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
+              icon: Icon(Icons.timeline),
               label: 'HOME',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.search, color: Colors.white),
               label: 'SEARCH',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.new_releases),
+              icon: Icon(Icons.local_fire_department, color: Colors.white),
               label: 'EXPLORE',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.book),
+              icon: Icon(Icons.book, color: Colors.white),
               label: 'Glossary',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.more_horiz, color: Colors.white),
+              label: 'MORE',
             ),
           ],
         ),

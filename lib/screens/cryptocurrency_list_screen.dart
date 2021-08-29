@@ -36,13 +36,37 @@ class CoinScreen extends StatelessWidget {
                   ),
                 );
               }).toList(),
-              onChanged: (order) => dropdownController.setValue(order!),
+              onChanged: (order) => dropdownController.setOrder(order!),
+            ),
+            DropdownButton<String>(
+              dropdownColor: Color(0xff340b93),
+              icon: const Icon(Icons.arrow_drop_down),
+              value: dropdownController.currencyDropdownValue.value,
+              items: <String>[
+                'usd',
+                'eur',
+                'vnd',
+                'btc',
+                'eth',
+                'bnb',
+              ].map<DropdownMenuItem<String>>((String currency) {
+                return DropdownMenuItem(
+                  value: currency,
+                  child: Text(
+                    currency.replaceAll(RegExp('[/_/g]'), ' ').toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }).toList(),
+              onChanged: (currency) =>
+                  dropdownController.setCurrency(currency!),
             )
           ],
         ),
         body: FutureBuilder(
           future: CoinService().getCryptocurrencyList(
-              order: dropdownController.orderDropdownValue.value),
+              order: dropdownController.orderDropdownValue.value,
+              currency: dropdownController.currencyDropdownValue.value),
           builder: (BuildContext context,
               AsyncSnapshot<List<Cryptocurrency>> snapshot) {
             switch (snapshot.connectionState) {

@@ -34,10 +34,10 @@ class NewsScreenUpdate extends StatelessWidget {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
+                  const Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3.0),
                     child: ListTile(
-                        trailing: Icon(Icons.star),
+                        trailing: Icon(Icons.local_fire_department),
                         title: Text(
                           'TRENDING NEWS',
                           style: TextStyle(
@@ -90,7 +90,8 @@ class NewsScreenUpdate extends StatelessWidget {
                                                     decoration: BoxDecoration(
                                                         image: DecorationImage(
                                                             image: NetworkImage(
-                                                                news.imgURL),
+                                                              news.imgURL,
+                                                            ),
                                                             fit: BoxFit.fill))),
                                                 Container(
                                                   height: MediaQuery.of(context)

@@ -2,6 +2,7 @@ import 'package:coinginner_flutter/controllers/searchUrl_controller.dart';
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/models/trending/trending.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
+import 'package:coinginner_flutter/services/http_trending.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,17 +11,6 @@ class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
   // final searchUrlController = SearchUrlController.to;
   final searchUrlController = Get.put(SearchUrlController());
-
-  Future<Trending> getTrending() async {
-    var response =
-        await Dio().get("https://api.coingecko.com/api/v3/search/trending");
-    if (response.statusCode == 200) {
-      Trending trending = Trending.fromJson(response.data);
-      return trending;
-    } else {
-      throw Exception("Error");
-    }
-  }
 
   Future<List<Cryptocurrency>> getCryptocurrencyList(
       {String id = "bitcoin"}) async {
@@ -183,7 +173,7 @@ class SearchScreen extends StatelessWidget {
                         color: Colors.white),
                   )),
               FutureBuilder<Trending>(
-                future: getTrending(),
+                future: TrendingService().getTrending(),
                 builder:
                     (BuildContext context, AsyncSnapshot<Trending> snapshot) {
                   if (snapshot.hasData) {

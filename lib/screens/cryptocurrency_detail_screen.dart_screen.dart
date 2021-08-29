@@ -205,13 +205,10 @@ class CoinDetailScreen extends StatelessWidget {
                                     for (var category in categories ?? [])
                                       Padding(
                                         padding: const EdgeInsets.all(3.0),
-                                        child: Expanded(
-                                          child: Chip(
-                                              label: Text(category,
-                                                  style:
-                                                      TextStyle(fontSize: 8))),
-                                        ),
-                                      )
+                                        child: Chip(
+                                            label: Text(category,
+                                                style: TextStyle(fontSize: 8))),
+                                      ),
                                   ],
                                 ),
                               ),
