@@ -89,7 +89,9 @@ class SearchScreen extends StatelessWidget {
               ),
               Obx(() => FutureBuilder(
                     future: getCryptocurrencyList(
-                        id: searchUrlController.url.value.toLowerCase()),
+                        id: searchUrlController.url.value
+                            .replaceAll(RegExp('\\s+'), '')
+                            .toLowerCase()),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<Cryptocurrency>> snapshot) {
                       switch (snapshot.connectionState) {
@@ -129,15 +131,10 @@ class SearchScreen extends StatelessWidget {
                                               onTap: () {
                                                 //without getx
                                                 //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          CoinDetailScreen(
-                                                              cryptocurrency:
-                                                                  cryptoCurrencyList[
-                                                                      index])),
-                                                );
+                                                Get.to(() => CoinDetailScreen(
+                                                    cryptocurrency:
+                                                        cryptoCurrencyList[
+                                                            index]));
                                               },
                                             )),
                                         Expanded(
@@ -250,15 +247,11 @@ class SearchScreen extends StatelessWidget {
                                                       onTap: () {
                                                         //without getx
                                                         //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  CoinDetailScreen(
-                                                                      cryptocurrency:
-                                                                          cryptoCurrencyList[
-                                                                              index])),
-                                                        );
+                                                        Get.to(() =>
+                                                            CoinDetailScreen(
+                                                                cryptocurrency:
+                                                                    cryptoCurrencyList[
+                                                                        index]));
                                                       },
                                                     )),
                                                 Expanded(

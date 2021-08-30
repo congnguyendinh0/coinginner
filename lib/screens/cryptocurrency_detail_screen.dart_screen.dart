@@ -184,7 +184,9 @@ class CoinDetailScreen extends StatelessWidget {
                               child: Text(
 
                                   // replaces all html tags
+                                  // source for regex:
                                   // https://stackoverflow.com/questions/51593790/remove-html-tags-from-a-string-in-dart
+                                  // by Sudeep Bashistha 4-24-2021
                                   text?.en?.replaceAll(
                                           RegExp(r'<[^>]*>|&[^;]+;'), '') ??
                                       "",
