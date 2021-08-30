@@ -11,6 +11,16 @@ class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
   // final searchUrlController = SearchUrlController.to;
   final searchUrlController = Get.put(SearchUrlController());
+  Future<Trending> getTrending() async {
+    var response =
+        await Dio().get("https://api.coingecko.com/api/v3/search/trending");
+    if (response.statusCode == 200) {
+      Trending trending = Trending.fromJson(response.data);
+      return trending;
+    } else {
+      throw Exception("Error");
+    }
+  }
 
   Future<List<Cryptocurrency>> getCryptocurrencyList(
       {String id = "bitcoin"}) async {
@@ -173,7 +183,7 @@ class SearchScreen extends StatelessWidget {
                         color: Colors.white),
                   )),
               FutureBuilder<Trending>(
-                future: TrendingService().getTrending(),
+                future: getTrending(),
                 builder:
                     (BuildContext context, AsyncSnapshot<Trending> snapshot) {
                   if (snapshot.hasData) {

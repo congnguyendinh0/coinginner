@@ -283,74 +283,76 @@ class CoinDetailScreen extends StatelessWidget {
                 return const Text("");
               },
             ),
-            FutureBuilder<PublicTreasury>(
-              future: getPublicTreasury(id: cryptocurrency.id),
-              builder: (BuildContext context,
-                  AsyncSnapshot<PublicTreasury> snapshot) {
-                if (snapshot.hasData) {
-                  var publicTreasury = snapshot.data;
-                  var companies = publicTreasury!.companies;
-                  if (publicTreasury != null) {
-                    return Column(
-                      children: [
-                        Column(
-                          children: [
-                            ListTile(
-                                title: Text('Public Treasury'),
-                                subtitle: Text(
-                                    '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
-                                    ''')),
-                          ],
-                        ),
-                        ExpansionTile(
-                          title:
-                              Text("COMPANIES THAT OWN ${cryptocurrency.name}"),
-                          children: [
-                            for (var company in companies!)
+            if (cryptocurrency.id == 'ethereum' ||
+                cryptocurrency.id == 'bitcoin')
+              FutureBuilder<PublicTreasury>(
+                future: getPublicTreasury(id: cryptocurrency.id),
+                builder: (BuildContext context,
+                    AsyncSnapshot<PublicTreasury> snapshot) {
+                  if (snapshot.hasData) {
+                    var publicTreasury = snapshot.data;
+                    var companies = publicTreasury!.companies;
+                    if (publicTreasury != null) {
+                      return Column(
+                        children: [
+                          Column(
+                            children: [
                               ListTile(
-                                  title: Text(company.name!),
+                                  title: Text('Public Treasury'),
                                   subtitle: Text(
-                                      "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}"))
-                          ],
-                        ),
-                        if (cryptocurrency.id == 'ethereum')
-                          FutureBuilder<GasOracle>(
-                            future: GasService.getFee(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<GasOracle> snapshot) {
-                              if (snapshot.hasData) {
-                                var gasoracle = snapshot.data;
+                                      '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
+                                    ''')),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text(
+                                "COMPANIES THAT OWN ${cryptocurrency.name}"),
+                            children: [
+                              for (var company in companies!)
+                                ListTile(
+                                    title: Text(company.name!),
+                                    subtitle: Text(
+                                        "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}"))
+                            ],
+                          ),
+                          if (cryptocurrency.id == 'ethereum')
+                            FutureBuilder<GasOracle>(
+                              future: GasService.getFee(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<GasOracle> snapshot) {
+                                if (snapshot.hasData) {
+                                  var gasoracle = snapshot.data;
 
-                                if (gasoracle != null) {
-                                  if (gasoracle.result != null) {
-                                    var result = gasoracle.result;
-                                    return Column(
-                                      children: [
-                                        Card(
-                                          child: ListTile(
-                                              title: Text('ETH GAS FEE',
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                              subtitle: Text(
-                                                  "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
-                                                  style: TextStyle(
-                                                      color: Colors.white))),
-                                        ),
-                                      ],
-                                    );
+                                  if (gasoracle != null) {
+                                    if (gasoracle.result != null) {
+                                      var result = gasoracle.result;
+                                      return Column(
+                                        children: [
+                                          Card(
+                                            child: ListTile(
+                                                title: Text('ETH GAS FEE',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                subtitle: Text(
+                                                    "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
+                                                    style: TextStyle(
+                                                        color: Colors.white))),
+                                          ),
+                                        ],
+                                      );
+                                    }
                                   }
                                 }
-                              }
-                              return const Text("");
-                            },
-                          ),
-                      ],
-                    );
+                                return const Text("");
+                              },
+                            ),
+                        ],
+                      );
+                    }
                   }
-                }
-                return const Text("");
-              },
-            ),
+                  return const Text("");
+                },
+              ),
             Container(
               margin: EdgeInsets.all(10),
               width: double.infinity,
