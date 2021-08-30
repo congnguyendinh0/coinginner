@@ -4,6 +4,7 @@ import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:coinginner_flutter/screens/news_screen.dart';
 import 'package:coinginner_flutter/screens/news_screen_update.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
+import 'package:coinginner_flutter/screens/watchlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:coinginner_flutter/controllers/homescreen_controller.dart';
@@ -23,6 +24,7 @@ class Homescreen extends StatelessWidget {
               SearchScreen(),
               NewsScreenUpdate(),
               GlossaryScreen(),
+              WatchListScreen(),
               ExchangeListScreen()
             ],
           ),
@@ -51,6 +53,10 @@ class Homescreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Icons.book, color: Colors.white),
               label: 'Glossary',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list, color: Colors.white),
+              label: 'Watchlist',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz, color: Colors.white),

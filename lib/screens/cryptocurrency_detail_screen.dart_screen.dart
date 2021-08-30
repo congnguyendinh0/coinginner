@@ -3,9 +3,12 @@ import 'package:coinginner_flutter/models/ethgas/gasoracle.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
+import 'package:coinginner_flutter/screens/watchlist_screen.dart';
 import 'package:coinginner_flutter/services/http_coinextra_service.dart';
 import 'package:coinginner_flutter/services/http_ethgas_service.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
@@ -38,6 +41,7 @@ class CoinDetailScreen extends StatelessWidget {
     // convert sparkline list dynamic to list double
     List<dynamic> sparkLine = cryptocurrency.sparkline["price"];
     var data = sparkLine.cast<double>();
+    var coinBox = Hive.box<String>('coinBox');
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +56,7 @@ class CoinDetailScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
                 child: Text(
-                  cryptocurrency.name +
+                  cryptocurrency.id +
                       "(" +
                       cryptocurrency.symbol +
                       ")"
@@ -67,9 +71,19 @@ class CoinDetailScreen extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.bookmark_add),
+            icon: Icon(Icons.bookmark_add,
+                color: coinBox.containsKey(cryptocurrency.name)
+                    ? Colors.blue
+                    : Colors.white),
             tooltip: 'save',
-            onPressed: () {},
+            onPressed: () {
+              coinBox.containsKey(cryptocurrency.name)
+                  ? coinBox.delete(cryptocurrency.name)
+                  : coinBox.put(cryptocurrency.name, cryptocurrency.id);
+              Get.to(() => WatchListScreen());
+              //coinBox.put(cryptocurrency.name, cryptocurrency.id);
+              //var coinbox = coinBox.toMap();
+            },
           ),
           IconButton(
             icon: const Icon(Icons.search),

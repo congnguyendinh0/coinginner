@@ -9,9 +9,15 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final directory = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(directory.path);
+  await Hive.openBox<String>('coinBox');
+
   await Firebase.initializeApp();
 
   await dotenv.load(fileName: ".env");
