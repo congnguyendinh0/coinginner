@@ -25,7 +25,7 @@ class SearchScreen extends StatelessWidget {
   Future<List<Cryptocurrency>> getCryptocurrencyList(
       {String id = "bitcoin"}) async {
     var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${id}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d');
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${id}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d%2C30d%2C1y');
 
     if (response.statusCode == 200) {
       List<dynamic> responseList = response.data;
@@ -42,7 +42,7 @@ class SearchScreen extends StatelessWidget {
 
   Future<List<Cryptocurrency>> getTrendingList({String ids = "url"}) async {
     var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d');
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d%2C30d%2C1y');
 
     if (response.statusCode == 200) {
       List<dynamic> responseList = response.data;

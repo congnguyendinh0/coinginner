@@ -17,7 +17,7 @@ class WatchListScreen extends StatelessWidget {
       String currency = 'usd',
       String ids = 'bitcoin'}) async {
     var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=$currency&ids=$ids&order=$order&per_page=250&page=1&sparkline=false&price_change_percentage=7d');
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=$currency&ids=$ids&order=$order&per_page=250&page=1&sparkline=false&price_change_percentage=7d%2C30d%2C1y');
 
     if (response.statusCode == 200) {
       List<dynamic> responseList = response.data;

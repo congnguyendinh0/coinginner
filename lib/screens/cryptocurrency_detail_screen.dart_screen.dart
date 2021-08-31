@@ -234,7 +234,7 @@ class CoinDetailScreen extends StatelessWidget {
                             ),
                             ListTile(
                               title: Text(
-                                'TRADING VOLUME',
+                                'TRADING VOLUME 24H',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -243,6 +243,54 @@ class CoinDetailScreen extends StatelessWidget {
                                   NumberFormat.compactCurrency(
                                           decimalDigits: 4, symbol: "")
                                       .format(cryptocurrency.totalVolume),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'FULLY DILUTED VALUATION',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: cryptocurrency.fullyDilutedValuation > 0
+                                  ? Text(
+                                      NumberFormat.compactCurrency(
+                                              decimalDigits: 4, symbol: "")
+                                          .format(cryptocurrency
+                                              .fullyDilutedValuation),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ))
+                                  : Text('-',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      )),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'PRICE CHANGE',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                  '1 WEEK:' +
+                                      NumberFormat.compactCurrency(
+                                              decimalDigits: 4, symbol: "")
+                                          .format(cryptocurrency
+                                              .priceChangePercentage7dInCurrency) +
+                                      '\n1 MONTH:' +
+                                      NumberFormat.compactCurrency(
+                                              decimalDigits: 4, symbol: "")
+                                          .format(cryptocurrency
+                                              .priceChangePercentage30dInCurrency) +
+                                      '\n1 YEAR:' +
+                                      NumberFormat.compactCurrency(
+                                              decimalDigits: 4, symbol: "")
+                                          .format(cryptocurrency
+                                              .priceChangePercentage1yInCurrency),
                                   style: TextStyle(
                                     color: Colors.white,
                                   )),
@@ -257,9 +305,11 @@ class CoinDetailScreen extends StatelessWidget {
                                 subtitle: cryptocurrency.circulatingSupply > 0
                                     ? Text(
                                         NumberFormat.compactCurrency(
-                                                decimalDigits: 4, symbol: '')
-                                            .format(cryptocurrency
-                                                .circulatingSupply),
+                                                    decimalDigits: 4,
+                                                    symbol: '')
+                                                .format(cryptocurrency
+                                                    .circulatingSupply) +
+                                            '\n             ',
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -323,8 +373,9 @@ class CoinDetailScreen extends StatelessWidget {
                               ),
                               subtitle: Text(
                                 NumberFormat.compactCurrency(
-                                        decimalDigits: 4, symbol: '')
-                                    .format(cryptocurrency.ath),
+                                            decimalDigits: 4, symbol: '')
+                                        .format(cryptocurrency.ath) +
+                                    '\n${cryptocurrency.athDate.substring(0, cryptocurrency.athDate.indexOf('T'))}\nSINCE ATH:${NumberFormat.compactCurrency(decimalDigits: 2, symbol: '').format(cryptocurrency.athChangePercentage) + "%"}',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -339,14 +390,28 @@ class CoinDetailScreen extends StatelessWidget {
                               ),
                               subtitle: Text(
                                 NumberFormat.compactCurrency(
-                                        decimalDigits: 4, symbol: '')
-                                    .format(cryptocurrency.ath),
+                                            decimalDigits: 2, symbol: '')
+                                        .format(cryptocurrency.atl) +
+                                    '\n${cryptocurrency.atlDate.substring(0, cryptocurrency.atlDate.indexOf('T'))}',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
                             ),
                           ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(0xffF72585)),
+                              onPressed: () {
+                                Get.toNamed('/glossary');
+                              },
+                              child: const Text("DONT'T UNDERSTAND A TERM?",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold))),
                         ),
                         ExpansionTile(
                           title: Text(
@@ -386,8 +451,11 @@ class CoinDetailScreen extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.all(3.0),
                                         child: Chip(
-                                            label: Text(category,
-                                                style: TextStyle(fontSize: 8))),
+                                          label: Text(category,
+                                              style: TextStyle(
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
                                       ),
                                   ],
                                 ),
@@ -401,12 +469,16 @@ class CoinDetailScreen extends StatelessWidget {
                           children: [
                             ListTile(
                                 title: Text("HOMEPAGE",
-                                    style: TextStyle(color: Colors.white)),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
                                 subtitle: Text(coinextra.links!.homepage![0],
                                     style: TextStyle(color: Colors.white))),
                             ListTile(
                                 title: Text("TWITTER",
-                                    style: TextStyle(color: Colors.white)),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
                                 subtitle: Text(
                                     "@" + coinextra.links!.twitterScreenName!,
                                     style: TextStyle(color: Colors.white)))
@@ -439,40 +511,43 @@ class CoinDetailScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(
-                                '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
+                                '''TOTAL VALUE: ${NumberFormat.compactCurrency(decimalDigits: 4, symbol: 'USD').format(publicTreasury.totalValueUsd)}\nTOTAL HOLDINGS: ${NumberFormat.compactCurrency(decimalDigits: 4, symbol: 'BTC').format(publicTreasury.totalHoldings)}
                                     ''',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               )),
-                          ExpansionTile(
-                            title: Text(
-                              "COMPANIES THAT OWN ${cryptocurrency.name.toUpperCase()}",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            children: [
-                              for (var company in companies!)
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 3.0),
-                                  child: ListTile(
-                                    title: Text(
-                                      company.name!,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    subtitle: Text(
-                                      "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: ExpansionTile(
+                              title: Text(
+                                "COMPANIES THAT OWN ${cryptocurrency.name.toUpperCase()}",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              children: [
+                                for (var company in companies!)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 3.0),
+                                    child: ListTile(
+                                      title: Text(
+                                        company.name!,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      subtitle: Text(
+                                        "TOTAL HOLDINGS:${NumberFormat.compactCurrency(decimalDigits: 4, symbol: '').format(company.totalHoldings)}\nPERCENTAGE OF TOTAL SUPPLY: ${NumberFormat.compactCurrency(decimalDigits: 3, symbol: '').format(company.percentageOfTotalSupply)}%",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
                           if (cryptocurrency.id == 'ethereum')
                             FutureBuilder<GasOracle>(
@@ -487,16 +562,77 @@ class CoinDetailScreen extends StatelessWidget {
                                       var result = gasoracle.result;
                                       return Column(
                                         children: [
-                                          Card(
-                                            child: ListTile(
-                                                title: Text('ETH GAS FEE',
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                subtitle: Text(
-                                                    "Standard:${result!.proposeGasPrice}Gwei Fast:${result.fastGasPrice}Gwei Slow:${result.safeGasPrice}Gwei Powered by Etherscan.io APIs",
-                                                    style: TextStyle(
-                                                        color: Colors.white))),
-                                          ),
+                                          ListTile(
+                                              trailing:
+                                                  Icon(Icons.local_gas_station),
+                                              title: Text("GAS FEE",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              subtitle: Text(
+                                                  "Powered by Etherscan.io APIs",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold))),
+                                          Row(children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              child: ListTile(
+                                                  title: Text(
+                                                      'SLOW FEE'
+                                                      '\n          ',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  subtitle: Text(
+                                                      '${result?.safeGasPrice}Gwei',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ))),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              child: ListTile(
+                                                  title: Text('STANDARD FEE',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  subtitle: Text(
+                                                      '${result?.proposeGasPrice}Gwei',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ))),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              child: ListTile(
+                                                  title: Text(
+                                                      'FAST FEE'
+                                                      '\n          ',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  subtitle: Text(
+                                                      '${result?.fastGasPrice}Gwei',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ))),
+                                            )
+                                          ])
                                         ],
                                       );
                                     }
@@ -512,17 +648,6 @@ class CoinDetailScreen extends StatelessWidget {
                   return const Text("");
                 },
               ),
-            Container(
-              margin: EdgeInsets.all(10),
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Color(0xffF72585)),
-                  onPressed: () {
-                    Get.toNamed('/glossary');
-                  },
-                  child: const Text("DONT'T UNDERSTAND A TERM?",
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-            ),
           ]),
         ),
       ),

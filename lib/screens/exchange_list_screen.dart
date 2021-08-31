@@ -13,7 +13,7 @@ class ExchangeListScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: Text('Top Exchanges'),
+              title: Text('EXCHANGES'),
             ),
             body: FutureBuilder(
               future: ExchangeService.getExchangeList(),

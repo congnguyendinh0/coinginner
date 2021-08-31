@@ -59,6 +59,8 @@ class Cryptocurrency {
       dynamic roi = 0,
       String? lastUpdated = "",
       double? priceChangePercentage7dInCurrency = 0,
+      double? priceChangePercentage30dInCurrency = 0,
+      double? priceChangePercentage1yInCurrency = 0,
 
       // checken nochmal
       Map<String, dynamic>? sparkline = null}) {
@@ -89,6 +91,10 @@ class Cryptocurrency {
     this.lastUpdated = lastUpdated ?? "";
     this.priceChangePercentage7dInCurrency =
         priceChangePercentage7dInCurrency ?? 0;
+    this.priceChangePercentage30dInCurrency =
+        priceChangePercentage30dInCurrency ?? 0;
+    this.priceChangePercentage30dInCurrency =
+        priceChangePercentage1yInCurrency ?? 0;
 
     this.sparkline = sparkline ?? {};
 
@@ -130,6 +136,10 @@ class Cryptocurrency {
       sparkline: json["sparkline_in_7d"],
       priceChangePercentage7dInCurrency:
           (json["price_change_percentage_7d_in_currency"])?.toDouble() ?? 0.0,
+      priceChangePercentage30dInCurrency:
+          (json["price_change_percentage_30d_in_currency"])?.toDouble() ?? 0.0,
+      priceChangePercentage1yInCurrency:
+          (json["price_change_percentage_1y_in_currency"])?.toDouble() ?? 0.0,
     );
   }
 }
