@@ -152,7 +152,7 @@ class CoinDetailScreen extends StatelessWidget {
                     ),
                   ]),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 50.0),
+                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
                     child: SfSparkLineChart(
                         axisLineColor: Colors.white,
                         axisLineDashArray: <double>[10, 3],
@@ -188,6 +188,165 @@ class CoinDetailScreen extends StatelessWidget {
                               child: const Text('BUY ON THESE EXCHANGES',
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
+                        ),
+                        GridView.count(
+                          childAspectRatio: (1 / 0.4),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          children: [
+                            ListTile(
+                              title: Text(
+                                'MARKET CAP',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                NumberFormat.compactCurrency(
+                                        decimalDigits: 4, symbol: '')
+                                    .format(cryptocurrency.marketCap),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'MARKET CAP CHANGE 24H',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                NumberFormat.compactCurrency(
+                                            decimalDigits: 4, symbol: '')
+                                        .format(
+                                            cryptocurrency.marketCapChange24h) +
+                                    ' (' +
+                                    cryptocurrency.marketCapChangePercentage24h
+                                        .toStringAsFixed(2) +
+                                    '%)',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'TRADING VOLUME',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                  NumberFormat.compactCurrency(
+                                          decimalDigits: 4, symbol: "")
+                                      .format(cryptocurrency.totalVolume),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
+                            ),
+                            ListTile(
+                                title: Text(
+                                  'CIRCULATING SUPPLY',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: cryptocurrency.circulatingSupply > 0
+                                    ? Text(
+                                        NumberFormat.compactCurrency(
+                                                decimalDigits: 4, symbol: '')
+                                            .format(cryptocurrency
+                                                .circulatingSupply),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text(
+                                        '-',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                            ListTile(
+                                title: Text(
+                                  'TOTAL SUPPLY',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: cryptocurrency.totalSupply > 0
+                                    ? Text(
+                                        NumberFormat.compactCurrency(
+                                                decimalDigits: 4, symbol: '')
+                                            .format(cryptocurrency.totalSupply),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text(
+                                        '-',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                            ListTile(
+                                title: Text(
+                                  'MAX SUPPLY',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: cryptocurrency.maxSupply > 0
+                                    ? Text(
+                                        NumberFormat.compactCurrency(
+                                                decimalDigits: 4, symbol: '')
+                                            .format(cryptocurrency.maxSupply),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text(
+                                        '-',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                            ListTile(
+                              title: Text(
+                                'ALL TIME HIGH',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                NumberFormat.compactCurrency(
+                                        decimalDigits: 4, symbol: '')
+                                    .format(cryptocurrency.ath),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'ALL TIME LOW',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                NumberFormat.compactCurrency(
+                                        decimalDigits: 4, symbol: '')
+                                    .format(cryptocurrency.ath),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         ExpansionTile(
                           title: Text(
@@ -252,65 +411,6 @@ class CoinDetailScreen extends StatelessWidget {
                                     "@" + coinextra.links!.twitterScreenName!,
                                     style: TextStyle(color: Colors.white)))
                           ],
-                        ),
-                        ListTile(
-                          title: Text(
-                            'MARKET CAP',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            NumberFormat.compactCurrency(
-                                    decimalDigits: 4, symbol: '')
-                                .format(cryptocurrency.marketCap),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            'TRADING VOLUME',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                              NumberFormat.compactCurrency(
-                                      decimalDigits: 4, symbol: "")
-                                  .format(cryptocurrency.totalVolume),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        ListTile(
-                          title: Text(
-                            'CIRCULATING SUPPLY',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            cryptocurrency.circulatingSupply.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            'TOTAL SUPPLY',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            cryptocurrency.totalSupply.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
                         ),
                       ],
                     );
