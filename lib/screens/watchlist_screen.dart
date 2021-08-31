@@ -46,7 +46,7 @@ class WatchListScreen extends StatelessWidget {
     print(coinBoxString);
     return Obx(() => Scaffold(
         appBar: AppBar(
-          title: Text("COIN LIST"),
+          title: Text("WATCHLIST"),
           actions: [
             DropdownButton<String>(
               dropdownColor: Color(0xff340b93),
@@ -143,9 +143,9 @@ class WatchListScreen extends StatelessWidget {
                                                             index])),
                                       ); */
 
-                                      Get.to(() => CoinDetailScreen(
-                                          cryptocurrency:
-                                              cryptoCurrencyList[index]));
+                                      //Get.to(() => CoinDetailScreen(
+                                      //cryptocurrency:
+                                      //  cryptoCurrencyList[index]));
                                     },
                                   )),
                               Expanded(

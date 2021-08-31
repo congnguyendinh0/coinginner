@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           buttonColor: Color(0xffF72585),
         ),
       ),
-      home: Homescreen(),
+      home: CoinScreen(),
       getPages: [
         GetPage(name: "/", page: () => Homescreen()),
         GetPage(name: "/coinlist", page: () => CoinScreen()),

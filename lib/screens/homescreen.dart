@@ -40,27 +40,27 @@ class Homescreen extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.timeline),
-              label: 'HOME',
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search, color: Colors.white),
-              label: 'SEARCH',
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.local_fire_department, color: Colors.white),
-              label: 'EXPLORE',
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.book, color: Colors.white),
-              label: 'Glossary',
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list, color: Colors.white),
-              label: 'Watchlist',
+              label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz, color: Colors.white),
-              label: 'MORE',
+              label: '',
             ),
           ],
         ),

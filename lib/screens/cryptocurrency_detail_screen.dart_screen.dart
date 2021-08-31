@@ -80,7 +80,8 @@ class CoinDetailScreen extends StatelessWidget {
               coinBox.containsKey(cryptocurrency.name)
                   ? coinBox.delete(cryptocurrency.name)
                   : coinBox.put(cryptocurrency.name, cryptocurrency.id);
-              Get.to(() => WatchListScreen());
+
+              //Get.to(() => WatchListScreen());
               //coinBox.put(cryptocurrency.name, cryptocurrency.id);
               //var coinbox = coinBox.toMap();
             },
@@ -191,7 +192,9 @@ class CoinDetailScreen extends StatelessWidget {
                         ExpansionTile(
                           title: Text(
                               'ABOUT ${cryptocurrency.name.toUpperCase()}',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(20.0),
@@ -210,7 +213,9 @@ class CoinDetailScreen extends StatelessWidget {
                         ),
                         ExpansionTile(
                             title: Text('CATEGORIES',
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
                             children: [
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
@@ -231,7 +236,9 @@ class CoinDetailScreen extends StatelessWidget {
                             ]),
                         ExpansionTile(
                           title: Text('LINKS',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                           children: [
                             ListTile(
                                 title: Text("HOMEPAGE",
@@ -258,8 +265,8 @@ class CoinDetailScreen extends StatelessWidget {
                                     decimalDigits: 4, symbol: '')
                                 .format(cryptocurrency.marketCap),
                             style: TextStyle(
-                              color: Colors.white,
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         ListTile(
@@ -269,9 +276,13 @@ class CoinDetailScreen extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(NumberFormat.compactCurrency(
-                                  decimalDigits: 4, symbol: "")
-                              .format(cryptocurrency.totalVolume)),
+                          subtitle: Text(
+                              NumberFormat.compactCurrency(
+                                      decimalDigits: 4, symbol: "")
+                                  .format(cryptocurrency.totalVolume),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                         ),
                         ListTile(
                           title: Text(
@@ -280,8 +291,12 @@ class CoinDetailScreen extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle:
-                              Text(cryptocurrency.circulatingSupply.toString()),
+                          subtitle: Text(
+                            cryptocurrency.circulatingSupply.toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         ListTile(
                           title: Text(
@@ -290,7 +305,12 @@ class CoinDetailScreen extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(cryptocurrency.totalSupply.toString()),
+                          subtitle: Text(
+                            cryptocurrency.totalSupply.toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     );
@@ -311,24 +331,47 @@ class CoinDetailScreen extends StatelessWidget {
                     if (publicTreasury != null) {
                       return Column(
                         children: [
-                          Column(
-                            children: [
-                              ListTile(
-                                  title: Text('Public Treasury'),
-                                  subtitle: Text(
-                                      '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
-                                    ''')),
-                            ],
-                          ),
+                          ListTile(
+                              title: Text(
+                                'Public Treasury',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                '''TOTAL VALUE: ${publicTreasury.totalValueUsd}USD \nTOTAL HOLDINGS: ${publicTreasury.totalHoldings}BTC 
+                                    ''',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )),
                           ExpansionTile(
                             title: Text(
-                                "COMPANIES THAT OWN ${cryptocurrency.name}"),
+                              "COMPANIES THAT OWN ${cryptocurrency.name.toUpperCase()}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             children: [
                               for (var company in companies!)
-                                ListTile(
-                                    title: Text(company.name!),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 3.0),
+                                  child: ListTile(
+                                    title: Text(
+                                      company.name!,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                     subtitle: Text(
-                                        "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}"))
+                                      "TOTAL HOLDINGS:${company.totalHoldings.toString()}\nPERCENTAGE OF TOTAL SUPPLY: ${company.percentageOfTotalSupply}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                           if (cryptocurrency.id == 'ethereum')
