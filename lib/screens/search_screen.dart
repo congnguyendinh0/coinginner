@@ -118,7 +118,8 @@ class SearchScreen extends StatelessWidget {
                                               leading: CircleAvatar(
                                                 foregroundImage: NetworkImage(
                                                     cryptocurrency.image),
-                                                backgroundColor: Colors.pink,
+                                                backgroundColor:
+                                                    Color(0xffF72585),
                                               ),
                                               title: Center(
                                                 child: Text(cryptocurrency.name,
@@ -140,18 +141,24 @@ class SearchScreen extends StatelessWidget {
                                         Expanded(
                                             flex: 1,
                                             child: ListTile(
-                                              title: Text(
-                                                cryptocurrency.currentPrice
-                                                    .toStringAsFixed(2),
-                                                maxLines: 1,
-                                              ),
-                                              subtitle: Text(
-                                                cryptocurrency
-                                                        .priceChangePercentage24h
-                                                        .toStringAsFixed(2) +
-                                                    " %",
-                                              ),
-                                            ))
+                                                title: Text(
+                                                    cryptocurrency.currentPrice
+                                                        .toStringAsFixed(2),
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                subtitle: cryptocurrency.priceChangePercentage24h > 0
+                                                    ? Text('\u{25B2}' + cryptocurrency.priceChangePercentage24h.toStringAsFixed(2) + " %",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight
+                                                                .bold))
+                                                    : Text('\u{25BC}' + cryptocurrency.priceChangePercentage24h.toStringAsFixed(2) + " %",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold))))
                                       ]),
                                     ));
                                   });
@@ -257,20 +264,25 @@ class SearchScreen extends StatelessWidget {
                                                 Expanded(
                                                     flex: 1,
                                                     child: ListTile(
-                                                      title: Text(
-                                                        cryptocurrency
-                                                            .currentPrice
-                                                            .toStringAsFixed(2),
-                                                        maxLines: 1,
-                                                      ),
-                                                      subtitle: Text(
-                                                        cryptocurrency
-                                                                .priceChangePercentage24h
-                                                                .toStringAsFixed(
-                                                                    2) +
-                                                            " %",
-                                                      ),
-                                                    ))
+                                                        title: Text(cryptocurrency.currentPrice.toStringAsFixed(2),
+                                                            maxLines: 1,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        subtitle: cryptocurrency.priceChangePercentage24h > 0
+                                                            ? Text('\u{25B2}' + cryptocurrency.priceChangePercentage24h.toStringAsFixed(2) + " %",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold))
+                                                            : Text(
+                                                                '\u{25BC}' + cryptocurrency.priceChangePercentage24h.toStringAsFixed(2) + " %",
+                                                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))
                                               ]),
                                             ));
                                           });

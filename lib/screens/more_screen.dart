@@ -5,8 +5,42 @@ class MoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: null,
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('COINGINNER',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+      body: SafeArea(
+          child: Column(
+        children: [
+          GestureDetector(
+              onTap: () {
+                showAboutDialog(
+                    context: context,
+                    applicationName: 'Coinginner',
+                    applicationLegalese: '@Coinginner.com',
+                    children: [
+                      ListTile(
+                        title: Text('Data provided by CoinGecko'),
+                      ),
+                      ListTile(
+                        title: Text(
+                            'Data provided by Powered by Etherscan.io APIs'),
+                      ),
+                      ListTile(
+                        title: Text('Data (News) provided by Coinstats API'),
+                      )
+                    ]);
+              },
+              child: ListTile(
+                title: Text(
+                  'LICENSES',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ))
+        ],
+      )),
     );
   }
 }

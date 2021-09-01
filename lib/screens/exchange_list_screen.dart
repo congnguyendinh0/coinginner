@@ -39,7 +39,7 @@ class ExchangeListScreen extends StatelessWidget {
                                         leading: CircleAvatar(
                                           foregroundImage: NetworkImage(
                                               exchange.image ?? ""),
-                                          backgroundColor: Colors.pink,
+                                          backgroundColor: Color(0xffF72585),
                                         ),
                                         title: Text(exchange.name ?? "",
                                             style: TextStyle(
@@ -51,18 +51,22 @@ class ExchangeListScreen extends StatelessWidget {
                                       flex: 1,
                                       child: ListTile(
                                         title: Text(
-                                          '# ' +
-                                              exchange.trustScoreRank
-                                                  .toString(),
-                                          maxLines: 1,
-                                        ),
-                                        subtitle: Text('24H BTC VOLUME ' +
-                                            NumberFormat.compactCurrency(
-                                                    decimalDigits: 3,
-                                                    symbol: '')
-                                                .format(exchange
-                                                    .tradeVolume24hBtcNormalized)
-                                                .toString()),
+                                            '# ' +
+                                                exchange.trustScoreRank
+                                                    .toString(),
+                                            maxLines: 1,
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                        subtitle: Text(
+                                            '24H BTC VOLUME ' +
+                                                NumberFormat.compactCurrency(
+                                                        decimalDigits: 3,
+                                                        symbol: '')
+                                                    .format(exchange
+                                                        .tradeVolume24hBtcNormalized)
+                                                    .toString(),
+                                            style:
+                                                TextStyle(color: Colors.white)),
                                       ))
                                 ]),
                               ));

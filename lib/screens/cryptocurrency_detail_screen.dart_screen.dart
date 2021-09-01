@@ -1,3 +1,4 @@
+import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:coinginner_flutter/models/companies/publictreasury.dart';
 import 'package:coinginner_flutter/models/ethgas/gasoracle.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
@@ -17,6 +18,7 @@ import 'package:coinginner_flutter/models/coinextra/coinextra.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   static Future<PublicTreasury> getPublicTreasury(
@@ -49,7 +51,7 @@ class CoinDetailScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               foregroundImage: NetworkImage(cryptocurrency.image),
-              backgroundColor: Colors.purple,
+              backgroundColor: Color(0xff340b93),
               radius: 10,
             ),
             Expanded(
@@ -153,13 +155,36 @@ class CoinDetailScreen extends StatelessWidget {
                   ]),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
-                    child: SfSparkLineChart(
-                        axisLineColor: Colors.white,
-                        axisLineDashArray: <double>[10, 3],
-                        trackball: SparkChartTrackball(
-                            activationMode: SparkChartActivationMode.tap),
-                        data: data,
-                        color: Colors.white),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /* SfSparkLineChart(
+                            axisLineColor: Colors.white,
+                            axisLineDashArray: <double>[10, 3],
+                            trackball: SparkChartTrackball(
+                                activationMode: SparkChartActivationMode.tap),
+                            data: data,
+                            color: Colors.white), */
+
+                        Sparkline(
+                          data: data,
+                          fillMode: FillMode.below,
+                          lineColor: Colors.purple,
+                          fillGradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xffF72585) ?? Colors.white,
+                              Color(0xff340b93) ?? Colors.white
+                            ],
+                          ),
+                        ),
+                        Padding(
+                            child: Text('1 WEEK',
+                                style: TextStyle(color: Colors.white)),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0))
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -177,7 +202,7 @@ class CoinDetailScreen extends StatelessWidget {
                     return Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
                           width: double.infinity,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -197,7 +222,7 @@ class CoinDetailScreen extends StatelessWidget {
                           children: [
                             ListTile(
                               title: Text(
-                                'MARKET CAP',
+                                'MARKET CAP\n                          ',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -428,11 +453,19 @@ class CoinDetailScreen extends StatelessWidget {
                                   // source for regex:
                                   // https://stackoverflow.com/questions/51593790/remove-html-tags-from-a-string-in-dart
                                   // by Sudeep Bashistha 4-24-2021
+
                                   text?.en?.replaceAll(
                                           RegExp(r'<[^>]*>|&[^;]+;'), '') ??
                                       "",
                                   style: TextStyle(color: Colors.white)),
-                            )
+                            ),
+                            if (coinextra.genesisDate != null)
+                              ListTile(
+                                title: Text('DATE OF CREATION',
+                                    style: TextStyle(color: Colors.white)),
+                                subtitle: Text(coinextra.genesisDate ?? '',
+                                    style: TextStyle(color: Colors.white)),
+                              )
                           ],
                         ),
                         ExpansionTile(
@@ -481,6 +514,20 @@ class CoinDetailScreen extends StatelessWidget {
                                         fontWeight: FontWeight.bold)),
                                 subtitle: Text(
                                     "@" + coinextra.links!.twitterScreenName!,
+                                    style: TextStyle(color: Colors.white))),
+                            ListTile(
+                                title: Text("REDDIT",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                                subtitle: Text(coinextra.links!.subRedditUrl!,
+                                    style: TextStyle(color: Colors.white))),
+                            ListTile(
+                                title: Text("TELEGRAM",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                                subtitle: Text(coinextra.links!.telegram!,
                                     style: TextStyle(color: Colors.white)))
                           ],
                         ),

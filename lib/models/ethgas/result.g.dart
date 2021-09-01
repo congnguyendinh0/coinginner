@@ -11,7 +11,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       safeGasPrice: json['SafeGasPrice'] as String?,
       proposeGasPrice: json['ProposeGasPrice'] as String?,
       fastGasPrice: json['FastGasPrice'] as String?,
-      suggestBaseFee: json['suggestBaseFee'] as String?,
+      suggestBaseFee: json['SuggestBaseFee'] as String?,
       gasUsedRatio: json['GasUsedRatio'] as String?,
     );
 
@@ -20,6 +20,6 @@ Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'SafeGasPrice': instance.safeGasPrice,
       'ProposeGasPrice': instance.proposeGasPrice,
       'FastGasPrice': instance.fastGasPrice,
-      'suggestBaseFee': instance.suggestBaseFee,
+      'SuggestBaseFee': instance.suggestBaseFee,
       'GasUsedRatio': instance.gasUsedRatio,
     };

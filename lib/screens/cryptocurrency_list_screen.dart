@@ -1,6 +1,5 @@
 import 'package:coinginner_flutter/controllers/dropdown_controller.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
@@ -31,7 +30,7 @@ class CoinScreen extends StatelessWidget {
                 return DropdownMenuItem(
                   value: order,
                   child: Text(
-                    order.replaceAll(RegExp('[/_/g]'), ' ').toUpperCase(),
+                    order.replaceAll(RegExp('[/_/]'), ' ').toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
                 );
@@ -94,7 +93,7 @@ class CoinScreen extends StatelessWidget {
                                     leading: CircleAvatar(
                                       foregroundImage:
                                           NetworkImage(cryptocurrency.image),
-                                      backgroundColor: Colors.pink,
+                                      backgroundColor: Color(0xffF72585),
                                     ),
                                     title: Center(
                                       child: Text(cryptocurrency.name,

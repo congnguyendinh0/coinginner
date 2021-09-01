@@ -6,36 +6,40 @@ class GlossaryScreen extends StatelessWidget {
   const GlossaryScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    //tutorial: https://www.youtube.com/watch?v=WuYOGBEOEOo&ab_channel=LearnFlutterwithMe
+    //followedtutorial: https://www.youtube.com/watch?v=WuYOGBEOEOo&ab_channel=LearnFlutterwithMe
     // firebase collection access
+
+    // instance of
     CollectionReference glossary =
         FirebaseFirestore.instance.collection('glossary');
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Glossary'),
+          title: Text('GLOSSARY'),
         ),
-        body: Center(
+        body: SafeArea(
           child: StreamBuilder(
-              // orders words  by name
+              // orders words
               stream: glossary.orderBy('word').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Text(''));
                 }
                 return ListView(
                   children: snapshot.data!.docs.map((glossary) {
-                    return Center(
-                      child: ListTile(
-                        title: Text(glossary["word"]),
-                        subtitle: Text(glossary["description"]),
+                    return ListTile(
+                      title: Text(
+                        glossary["word"],
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        glossary["description"],
+                        style: TextStyle(color: Colors.white),
                       ),
                     );
                   }).toList(),
                 );
               }),
-        ),
-      ),
-    );
+        ));
   }
 }
