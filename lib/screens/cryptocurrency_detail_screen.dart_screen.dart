@@ -173,10 +173,7 @@ class CoinDetailScreen extends StatelessWidget {
                           fillGradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xffF72585) ?? Colors.white,
-                              Color(0xff340b93) ?? Colors.white
-                            ],
+                            colors: [Color(0xffF72585), Color(0xff340b93)],
                           ),
                         ),
                         Padding(
@@ -505,7 +502,8 @@ class CoinDetailScreen extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),
-                                subtitle: Text(coinextra.links!.homepage![0],
+                                subtitle: Text(
+                                    coinextra.links?.homepage?[0] ?? '',
                                     style: TextStyle(color: Colors.white))),
                             ListTile(
                                 title: Text("TWITTER",
@@ -513,21 +511,22 @@ class CoinDetailScreen extends StatelessWidget {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),
                                 subtitle: Text(
-                                    "@" + coinextra.links!.twitterScreenName!,
+                                    coinextra.links?.twitterScreenName ?? '',
                                     style: TextStyle(color: Colors.white))),
                             ListTile(
                                 title: Text("REDDIT",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),
-                                subtitle: Text(coinextra.links!.subRedditUrl!,
+                                subtitle: Text(
+                                    coinextra.links?.subRedditUrl ?? '',
                                     style: TextStyle(color: Colors.white))),
                             ListTile(
                                 title: Text("TELEGRAM",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),
-                                subtitle: Text(coinextra.links!.telegram!,
+                                subtitle: Text(coinextra.links?.telegram ?? '',
                                     style: TextStyle(color: Colors.white)))
                           ],
                         ),
