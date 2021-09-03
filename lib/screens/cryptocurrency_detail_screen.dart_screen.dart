@@ -7,6 +7,7 @@ import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:coinginner_flutter/screens/watchlist_screen.dart';
 import 'package:coinginner_flutter/services/http_coinextra_service.dart';
 import 'package:coinginner_flutter/services/http_ethgas_service.dart';
+import 'package:coinginner_flutter/services/http_publictreasury_service.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
@@ -21,18 +22,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class CoinDetailScreen extends StatelessWidget {
-  static Future<PublicTreasury> getPublicTreasury(
-      {String id = "bitcoin"}) async {
-    var response = await Dio().get(
-        "https://api.coingecko.com/api/v3/companies/public_treasury/${id}");
-
-    if (response.statusCode == 200) {
-      PublicTreasury publicTreasury = PublicTreasury.fromJson(response.data);
-      return publicTreasury;
-    } else {
-      throw Exception("Error");
-    }
-  }
+  // Future is like promise ,potential value
 
   final Cryptocurrency cryptocurrency;
   const CoinDetailScreen({Key? key, required this.cryptocurrency})
@@ -43,6 +33,8 @@ class CoinDetailScreen extends StatelessWidget {
     // convert sparkline list dynamic to list double
     List<dynamic> sparkLine = cryptocurrency.sparkline["price"];
     var data = sparkLine.cast<double>();
+
+    // access the coinbox with all coins for the watchlist
     var coinBox = Hive.box<String>('coinBox');
 
     return Scaffold(
@@ -79,19 +71,18 @@ class CoinDetailScreen extends StatelessWidget {
                     : Colors.white),
             tooltip: 'save',
             onPressed: () {
+              // if the coinbox contains he key (name) of the cryptoccureency
+              // should delete the key, else put the new cryptocurrency in the coinbox with the name as  key and id as value
               coinBox.containsKey(cryptocurrency.name)
                   ? coinBox.delete(cryptocurrency.name)
                   : coinBox.put(cryptocurrency.name, cryptocurrency.id);
-
-              //Get.to(() => WatchListScreen());
-              //coinBox.put(cryptocurrency.name, cryptocurrency.id);
-              //var coinbox = coinBox.toMap();
             },
           ),
           IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'search',
             onPressed: () {
+              //pop current page
               Get.offNamed('/search');
             },
           ),
@@ -211,6 +202,8 @@ class CoinDetailScreen extends StatelessWidget {
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                         ),
+
+                        // creates a grid with 2 columns
                         GridView.count(
                           childAspectRatio: (1 / 0.4),
                           shrinkWrap: true,
@@ -537,14 +530,21 @@ class CoinDetailScreen extends StatelessWidget {
                 return const Text("");
               },
             ),
+
+            //chcecks if coin has the id eth or btc because only those have public info
             if (cryptocurrency.id == 'ethereum' ||
                 cryptocurrency.id == 'bitcoin')
               FutureBuilder<PublicTreasury>(
-                future: getPublicTreasury(id: cryptocurrency.id),
+                // everytime rebuilds this future function will be called
+                // render  widget modeled after our publicTreasury model
+                future: PublicTreasuryService()
+                    .getPublicTreasury(id: cryptocurrency.id),
                 builder: (BuildContext context,
                     AsyncSnapshot<PublicTreasury> snapshot) {
+                  // if it has data
                   if (snapshot.hasData) {
                     var publicTreasury = snapshot.data;
+                    //
                     var companies = publicTreasury!.companies;
                     if (publicTreasury != null) {
                       return Column(
@@ -595,7 +595,10 @@ class CoinDetailScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+
+                          // only if its ethereum then render this section
                           if (cryptocurrency.id == 'ethereum')
+                            // gasorcale model
                             FutureBuilder<GasOracle>(
                               future: GasService.getFee(),
                               builder: (BuildContext context,

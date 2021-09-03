@@ -21,6 +21,7 @@ class CoinScreen extends StatelessWidget {
               dropdownColor: Color(0xff340b93),
               icon: const Icon(Icons.arrow_drop_down),
               value: dropdownController.orderDropdownValue.value,
+              // differenct currencies
               items: <String>[
                 'market_cap_asc',
                 'market_cap_desc',
@@ -30,6 +31,7 @@ class CoinScreen extends StatelessWidget {
                 return DropdownMenuItem(
                   value: order,
                   child: Text(
+                    // replace all _ with spaces
                     order.replaceAll(RegExp('[/_/]'), ' ').toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
@@ -103,18 +105,6 @@ class CoinScreen extends StatelessWidget {
                                           )),
                                     ),
                                     onTap: () {
-                                      //without getx
-                                      //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
-                                      /*  Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CoinDetailScreen(
-                                                    cryptocurrency:
-                                                        cryptoCurrencyList[
-                                                            index])),
-                                      ); */
-
                                       Get.to(() => CoinDetailScreen(
                                           cryptocurrency:
                                               cryptoCurrencyList[index]));

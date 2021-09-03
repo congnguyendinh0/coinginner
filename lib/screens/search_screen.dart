@@ -2,6 +2,7 @@ import 'package:coinginner_flutter/controllers/searchUrl_controller.dart';
 import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:coinginner_flutter/models/trending/trending.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
+import 'package:coinginner_flutter/services/http_search_service.dart';
 import 'package:coinginner_flutter/services/http_trending.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,51 +12,6 @@ class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
   // final searchUrlController = SearchUrlController.to;
   final searchUrlController = Get.put(SearchUrlController());
-  Future<Trending> getTrending() async {
-    var response =
-        await Dio().get("https://api.coingecko.com/api/v3/search/trending");
-    if (response.statusCode == 200) {
-      Trending trending = Trending.fromJson(response.data);
-      return trending;
-    } else {
-      throw Exception("Error");
-    }
-  }
-
-  Future<List<Cryptocurrency>> getCryptocurrencyList(
-      {String id = "bitcoin"}) async {
-    var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${id}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d%2C30d%2C1y');
-
-    if (response.statusCode == 200) {
-      List<dynamic> responseList = response.data;
-      List<Cryptocurrency> cryptoCurrencyList = [];
-      for (var i = 0; i < responseList.length; i++) {
-        cryptoCurrencyList.add(Cryptocurrency.fromJSON(responseList[i]));
-      }
-      return cryptoCurrencyList;
-      // return cryptocurrencyList.map((e) => Cryptocurrency.fromJSON(e)).toList();
-    } else {
-      throw Exception("Error");
-    }
-  }
-
-  Future<List<Cryptocurrency>> getTrendingList({String ids = "url"}) async {
-    var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&order=market_cap_desc&per_page=1&page=1&sparkline=true&price_change_percentage=7d%2C30d%2C1y');
-
-    if (response.statusCode == 200) {
-      List<dynamic> responseList = response.data;
-      List<Cryptocurrency> cryptoCurrencyList = [];
-      for (var i = 0; i < responseList.length; i++) {
-        cryptoCurrencyList.add(Cryptocurrency.fromJSON(responseList[i]));
-      }
-      return cryptoCurrencyList;
-      // return cryptocurrencyList.map((e) => Cryptocurrency.fromJSON(e)).toList();
-    } else {
-      throw Exception("Error");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +30,7 @@ class SearchScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: TextField(
+                  //goal is it to access the  content of the textfield : the controller sets the content of the textfield = id
                   autofocus: true,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
@@ -87,12 +44,18 @@ class SearchScreen extends StatelessWidget {
                   onSubmitted: (id) => searchUrlController.setUrl(id),
                 ),
               ),
+
+              // everytime the id / url is changed  it gonna be rebuild by obx
               Obx(() => FutureBuilder(
-                    future: getCryptocurrencyList(
+                    // using this function . we replace delete every space of the textinput
+                    //replace all potential spaces and make them lowercase
+                    // if empty gonna return bitcoin as example
+                    future: SearchService().getSearch(
                         id: searchUrlController.url.value
                             .replaceAll(RegExp('\\s+'), '')
                             .toLowerCase()),
                     builder: (BuildContext context,
+                        // builds a list of the cryptocurrencies after the model
                         AsyncSnapshot<List<Cryptocurrency>> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.done:
@@ -186,14 +149,17 @@ class SearchScreen extends StatelessWidget {
                         fontSize: 20,
                         color: Colors.white),
                   )),
+
+              // First  FB will get the trending coin ids and put them into the url
               FutureBuilder<Trending>(
-                future: getTrending(),
+                future: TrendingService().getTrending(),
                 builder:
                     (BuildContext context, AsyncSnapshot<Trending> snapshot) {
                   if (snapshot.hasData) {
                     var trending = snapshot.data;
 
                     if (trending != null) {
+                      // api returns 7 coins  we access their ids here
                       var trending1 = trending.coins![0].item!.id!;
                       var trending2 = trending.coins![1].item!.id!;
                       var trending3 = trending.coins![2].item!.id!;
@@ -205,8 +171,9 @@ class SearchScreen extends StatelessWidget {
                           "$trending1%2C$trending2%2C$trending3%2C$trending4%2C$trending5%2C$trending6%2C$trending7";
                       return Column(
                         children: [
+                          // Second  FB will use the ids and the url  to fetch the trending list of coins and build them
                           FutureBuilder(
-                            future: getTrendingList(ids: url),
+                            future: TrendingService().getTrendingList(ids: url),
                             builder: (BuildContext context,
                                 AsyncSnapshot<List<Cryptocurrency>> snapshot) {
                               switch (snapshot.connectionState) {

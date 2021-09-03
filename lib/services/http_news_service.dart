@@ -31,11 +31,15 @@ class NewsService {
   static Future<List<News>> getTrendingNews() async {
     var response = await Dio().get(NewsService.TRENDING);
     if (response.statusCode == 200) {
+      // body type map  = the response which is expected to be a map
       Map<String, dynamic> body = response.data as Map<String, dynamic>;
+      // take the value from the key  news
       var jsonValue = body["news"];
       List<News> allNews = [];
+      // iteration
       for (var i = 0; i < jsonValue.length; i++) {
         var element = News.fromJSON(jsonValue[i]);
+        //list of news  we add everyy item to the news
         allNews.add(element);
       }
       return allNews;
@@ -44,6 +48,7 @@ class NewsService {
     }
   }
 
+  // same here
   static Future<List<News>> getHandpickedNews() async {
     Response response = await Dio().get(NewsService.HANDPICKED);
     if (response.statusCode == 200) {
