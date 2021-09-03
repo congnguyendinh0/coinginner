@@ -15,7 +15,7 @@ class CoinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
         appBar: AppBar(
-          title: Text("COIN LIST"),
+          title: Text("COINGINNER"),
           actions: [
             DropdownButton<String>(
               dropdownColor: Color(0xff340b93),

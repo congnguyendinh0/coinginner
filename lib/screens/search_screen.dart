@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
   // final searchUrlController = SearchUrlController.to;
+  // makes controller avilable for all childs
   final searchUrlController = Get.put(SearchUrlController());
 
   @override
