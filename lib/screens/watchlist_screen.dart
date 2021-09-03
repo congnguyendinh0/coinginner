@@ -1,5 +1,6 @@
 import 'package:coinginner_flutter/controllers/dropdown_controller.dart';
 import 'package:coinginner_flutter/screens/cryptocurrency_detail_screen.dart_screen.dart';
+import 'package:coinginner_flutter/services/http_watchlist_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -7,36 +8,17 @@ import 'package:coinginner_flutter/models/cryptocurrency.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../services/http_coin_service.dart';
-
 class WatchListScreen extends StatelessWidget {
   WatchListScreen({Key? key}) : super(key: key);
-
-  Future<List<Cryptocurrency>> getCryptocurrencyList(
-      {String order = 'market_cap_desc',
-      String currency = 'usd',
-      String ids = 'bitcoin'}) async {
-    var response = await Dio().get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=$currency&ids=$ids&order=$order&per_page=250&page=1&sparkline=false&price_change_percentage=7d%2C30d%2C1y');
-
-    if (response.statusCode == 200) {
-      List<dynamic> responseList = response.data;
-      List<Cryptocurrency> cryptoCurrencyList = [];
-      for (var i = 0; i < responseList.length; i++) {
-        cryptoCurrencyList.add(Cryptocurrency.fromJSON(responseList[i]));
-      }
-      return cryptoCurrencyList;
-      // return cryptocurrencyList.map((e) => Cryptocurrency.fromJSON(e)).toList();
-    } else {
-      throw Exception("Error");
-    }
-  }
 
   final dropdownController = Get.put(DropdownController());
 
   @override
   Widget build(BuildContext context) {
+    /// access the coinbox
     var coinBox = Hive.box<String>('coinBox');
+
+    // 1. coinbox.map => get every document in the box  .values =>  get all values (ids) toString() make them to a string + replace all whitespaces and commas and add them together as the final ids string
     var coinBoxString = coinBox
         .toMap()
         .values
@@ -44,6 +26,8 @@ class WatchListScreen extends StatelessWidget {
         .replaceAll(RegExp('\\s+'), '')
         .replaceAll(',', '%2C');
     print(coinBoxString);
+
+// Obx state manager, is like statefulwidget,listens for .obs changes from controller which was declared and initialized,rebuilds itself everytime changes
     return Obx(() => Scaffold(
         appBar: AppBar(
           title: Text("WATCHLIST"),
@@ -51,6 +35,7 @@ class WatchListScreen extends StatelessWidget {
             DropdownButton<String>(
               dropdownColor: Color(0xff340b93),
               icon: const Icon(Icons.arrow_drop_down),
+              // values from the dropdownController order .obs
               value: dropdownController.orderDropdownValue.value,
               items: <String>[
                 'market_cap_asc',
@@ -58,17 +43,22 @@ class WatchListScreen extends StatelessWidget {
                 'volume_asc',
                 'volume_desc'
               ].map<DropdownMenuItem<String>>((String order) {
+                // removing every _  from the text
                 return DropdownMenuItem(
                   value: order,
                   child: Text(
+                    //replaces all _ symbols
                     order.replaceAll(RegExp('[/_/g]'), ' ').toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
                 );
               }).toList(),
+
+              // onchange this function from our controller will be called and update the order
               onChanged: (order) => dropdownController.setOrder(order!),
             ),
             DropdownButton<String>(
+              // same logic here
               dropdownColor: Color(0xff340b93),
               icon: const Icon(Icons.arrow_drop_down),
               value: dropdownController.currencyDropdownValue.value,
@@ -93,8 +83,10 @@ class WatchListScreen extends StatelessWidget {
             )
           ],
         ),
+        // Futurebuilder  takes a future in js (promise) and builds itself based on its snapshot
         body: FutureBuilder(
-          future: getCryptocurrencyList(
+          // future is in js promise // getting the list of  cryptos based on the paramieters  // coinboxstring is our id strng
+          future: WatchListService().getWatchList(
               order: dropdownController.orderDropdownValue.value,
               currency: dropdownController.currencyDropdownValue.value,
               ids: coinBoxString),
@@ -130,23 +122,7 @@ class WatchListScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                           )),
                                     ),
-                                    onTap: () {
-                                      //without getx
-                                      //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoinDetailScreen(cryptocurrency: cryptoCurrencyList[index],)));
-                                      /*  Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CoinDetailScreen(
-                                                    cryptocurrency:
-                                                        cryptoCurrencyList[
-                                                            index])),
-                                      ); */
-
-                                      //Get.to(() => CoinDetailScreen(
-                                      //cryptocurrency:
-                                      //  cryptoCurrencyList[index]));
-                                    },
+                                    onTap: () {},
                                   )),
                               Expanded(
                                   flex: 1,

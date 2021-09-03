@@ -18,6 +18,7 @@ class MoreScreen extends StatelessWidget {
                 showAboutDialog(
                     context: context,
                     applicationName: 'Coinginner',
+                    applicationVersion: '1.0',
                     applicationLegalese: '@Coinginner.com',
                     children: [
                       ListTile(
@@ -29,7 +30,14 @@ class MoreScreen extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text('Data (News) provided by Coinstats API'),
-                      )
+                      ),
+                      ListTile(
+                        title: Text('Created by Cong Nguyen Dinh'),
+                      ),
+                      ListTile(
+                        title: Text(
+                            'https://github.com/congnguyendinh0/coinginner'),
+                      ),
                     ]);
               },
               child: ListTile(

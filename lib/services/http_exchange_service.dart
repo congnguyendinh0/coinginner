@@ -3,6 +3,7 @@ import 'package:coinginner_flutter/models/exchanges/exchange.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 
+//get exchanges
 class ExchangeService {
   static String get EXCHANGES {
     return "https://api.coingecko.com/api/v3/exchanges?per_page=10&page=1";

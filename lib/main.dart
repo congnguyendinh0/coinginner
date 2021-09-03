@@ -2,6 +2,7 @@ import 'package:coinginner_flutter/screens/cryptocurrency_list_screen.dart';
 import 'package:coinginner_flutter/screens/exchange_list_screen.dart';
 import 'package:coinginner_flutter/screens/glossary_screen.dart';
 import 'package:coinginner_flutter/screens/homescreen.dart';
+import 'package:coinginner_flutter/screens/more_screen.dart';
 import 'package:coinginner_flutter/screens/news_screen_update.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
+  //ensures tahateverything is binded
   WidgetsFlutterBinding.ensureInitialized();
+  // looks for directory
   final directory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(directory.path);
   await Hive.openBox<String>('coinBox');
@@ -66,6 +69,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/explore", page: () => NewsScreenUpdate()),
         GetPage(name: "/exchangelist", page: () => ExchangeListScreen()),
         GetPage(name: "/glossary", page: () => GlossaryScreen()),
+        GetPage(name: "/glossary", page: () => MoreScreen()),
       ],
     );
   }

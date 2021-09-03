@@ -2,6 +2,8 @@ import 'package:coinginner_flutter/models/coinextra/coinextra.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 
+// get extra details from the coins
+//using its id
 class CoinextraService {
   static Future<Coinextra> getCoinextra({String id = "bitcoin"}) async {
     var response = await Dio().get(

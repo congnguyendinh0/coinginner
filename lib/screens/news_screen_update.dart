@@ -1,18 +1,15 @@
-import 'package:coinginner_flutter/models/ethgas/gasoracle.dart';
 import 'package:coinginner_flutter/models/global/global.dart';
 import 'package:coinginner_flutter/screens/search_screen.dart';
-import 'package:coinginner_flutter/services/http_ethgas_service.dart';
+
 import 'package:coinginner_flutter/services/http_global_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
+
 import 'package:coinginner_flutter/models/news.dart';
-import 'package:dio/dio.dart';
+
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/http_news_service.dart';
-import 'package:coinginner_flutter/screens/news_screen.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NewsScreenUpdate extends StatelessWidget {
   const NewsScreenUpdate({Key? key}) : super(key: key);
@@ -27,7 +24,7 @@ class NewsScreenUpdate extends StatelessWidget {
                     onPressed: () {
                       Get.to(SearchScreen());
                     },
-                    icon: Icon(Icons.search))
+                    icon: const Icon(Icons.search))
               ],
               title: Text('EXPLORE'),
             ),
@@ -68,12 +65,6 @@ class NewsScreenUpdate extends StatelessWidget {
                                       itemBuilder: (BuildContext itemContext,
                                           int index) {
                                         News news = allNews[index];
-                                        var desc = news.description.substring(
-                                            0,
-                                            news.description.length < 255
-                                                ? news.description.length
-                                                : 255);
-
                                         return SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
@@ -125,6 +116,8 @@ class NewsScreenUpdate extends StatelessWidget {
                                                               color: Colors
                                                                   .white))),
                                                 ),
+
+                                                // detects clicks on onTap and then launches the links
                                                 GestureDetector(
                                                   onTap: () async {
                                                     await canLaunch(news.link)
@@ -287,6 +280,8 @@ class NewsScreenUpdate extends StatelessWidget {
                                   fontSize: 20),
                             )),
                       ),
+
+                      //
                       FutureBuilder<Global>(
                         future: GlobalService.getGlobal(),
                         builder: (BuildContext context,
@@ -298,15 +293,6 @@ class NewsScreenUpdate extends StatelessWidget {
                               if (global.data != null) {
                                 var data = global.data;
                                 var totalMarketCap = data?.totalMarketCap;
-                                var btcPercent = data?.marketCapPercentage?.btc;
-                                var ethPercent = data?.marketCapPercentage?.eth;
-                                var adaPercent = data?.marketCapPercentage?.ada;
-                                var bnbPercent = data?.marketCapPercentage?.bnb;
-                                var rest = 100 -
-                                    btcPercent! -
-                                    ethPercent! -
-                                    adaPercent! -
-                                    bnbPercent!;
                                 return Column(
                                   children: [
                                     ListTile(

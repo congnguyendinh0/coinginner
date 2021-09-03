@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:coinginner_flutter/models/news.dart';
 import 'package:dio/dio.dart';
-import '../services/http_news_service.dart';
-import 'package:coinginner_flutter/screens/news_screen.dart';
+import '../../services/http_news_service.dart';
+import 'package:coinginner_flutter/screens/outdated/news_screen.dart';
 
-// First version of newsscreen
+// First version of newsscreen outdated
 class NewsScreen extends StatelessWidget {
   const NewsScreen({Key? key}) : super(key: key);
 
