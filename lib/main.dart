@@ -18,11 +18,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // looks for directory
   final directory = await getApplicationDocumentsDirectory();
+  // init hive
   await Hive.initFlutter(directory.path);
+// open the box
   await Hive.openBox<String>('coinBox');
-
+//init fire base
   await Firebase.initializeApp();
-
+//load dotenv
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Coinginner',
       theme: ThemeData(
         primaryColor: Color(0xff340b93),
