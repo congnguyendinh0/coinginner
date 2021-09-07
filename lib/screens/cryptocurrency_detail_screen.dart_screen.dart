@@ -296,17 +296,20 @@ class CoinDetailScreen extends StatelessWidget {
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage7dInCurrency) +"%"
-                                      '\n1 MONTH:' +
+                                              .priceChangePercentage7dInCurrency) +
+                                      "%"
+                                          '\n1 MONTH:' +
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage30dInCurrency) +"%"
-                                      '\n1 YEAR:' +
+                                              .priceChangePercentage30dInCurrency) +
+                                      "%"
+                                          '\n1 YEAR:' +
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage1yInCurrency) + "%",
+                                              .priceChangePercentage1yInCurrency) +
+                                      "%",
                                   style: TextStyle(
                                     color: Colors.white,
                                   )),
@@ -552,7 +555,7 @@ class CoinDetailScreen extends StatelessWidget {
                         children: [
                           ListTile(
                               title: Text(
-                                'Public Treasury',
+                                'PUBLIC TREASURY',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
