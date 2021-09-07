@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
+      
       title: 'Coinginner',
       theme: ThemeData(
         primaryColor: Color(0xff340b93),

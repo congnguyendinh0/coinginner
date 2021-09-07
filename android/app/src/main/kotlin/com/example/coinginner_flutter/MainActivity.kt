@@ -1,4 +1,4 @@
-package com.example.coinginner_flutter
+package com.coinginner.coinginner
 
 import io.flutter.embedding.android.FlutterActivity
 
