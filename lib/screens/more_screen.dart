@@ -26,8 +26,7 @@ class MoreScreen extends StatelessWidget {
                         title: Text('Data provided by CoinGecko'),
                       ),
                       ListTile(
-                        title: Text(
-                            'Data provided by Powered by Etherscan.io APIs'),
+                        title: Text('Powered by Etherscan.io APIs'),
                       ),
                       ListTile(
                         title: Text('Data (News) provided by Coinstats API'),
@@ -58,12 +57,32 @@ class MoreScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white))),
           ListTile(
               title: Text(
-                'News ARE PROVIDED BY',
+                'NEWS ARE PROVIDED BY',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 'coinstats.app',
+                style: TextStyle(color: Colors.white),
+              )),
+          ListTile(
+              title: Text(
+                'DATA PROVIDED BY',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'CoinGecko',
+                style: TextStyle(color: Colors.white),
+              )),
+          ListTile(
+              title: Text(
+                'POWERED BY',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Etherscan.io APIs',
                 style: TextStyle(color: Colors.white),
               ))
         ],
