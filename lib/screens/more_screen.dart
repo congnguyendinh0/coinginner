@@ -54,8 +54,7 @@ class MoreScreen extends StatelessWidget {
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(
-                  'Email:coinginner@gmail.com Phone: +4915147415346 coinginner.com',
+              subtitle: Text('Email:coinginner@gmail.com  coinginner.com',
                   style: TextStyle(color: Colors.white))),
           ListTile(
               title: Text(
