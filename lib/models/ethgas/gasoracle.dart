@@ -4,6 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'gasoracle.g.dart';
 
+//gas fee 
+
 @JsonSerializable(explicitToJson: true)
 class GasOracle {
   String? status;

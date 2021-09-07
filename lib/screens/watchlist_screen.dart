@@ -11,21 +11,22 @@ import 'package:hive_flutter/hive_flutter.dart';
 class WatchListScreen extends StatelessWidget {
   WatchListScreen({Key? key}) : super(key: key);
 
+  // control the drop down for order and currency
   final dropdownController = Get.put(DropdownController());
 
   @override
   Widget build(BuildContext context) {
     /// access the coinbox
     var coinBox = Hive.box<String>('coinBox');
-
-    // 1. coinbox.map => get every document in the box  .values =>  get all values (ids) toString() make them to a string + replace all whitespaces and commas and add them together as the final ids string
+    //  for example (bitcoin, ethereum, dogecoin) - > bitcoin%2Cethereum%2c
+    // 1. coinbox.tomap => get every document in the box  .values =>  get all values (ids) toString() make them to a string + replace all whitespaces and commas and add them together as the final ids string
     var coinBoxString = coinBox
         .toMap()
         .values
         .toString()
         .replaceAll(RegExp('\\s+'), '')
         .replaceAll(',', '%2C');
-    print(coinBoxString);
+    //print(coinBoxString);
 
 // Obx state manager, is like statefulwidget,listens for .obs changes from controller which was declared and initialized,rebuilds itself everytime changes
     return Obx(() => Scaffold(
@@ -86,6 +87,7 @@ class WatchListScreen extends StatelessWidget {
         // Futurebuilder  takes a future in js (promise) and builds itself based on its snapshot
         body: FutureBuilder(
           // future is in js promise // getting the list of  cryptos based on the paramieters  // coinboxstring is our id strng
+          //fetches the watchlist -> based on the url created above coinboxstring
           future: WatchListService().getWatchList(
               order: dropdownController.orderDropdownValue.value,
               currency: dropdownController.currencyDropdownValue.value,
@@ -130,12 +132,12 @@ class WatchListScreen extends StatelessWidget {
                                     title: Text(
                                       cryptocurrency.currentPrice
                                           .toStringAsFixed(2),
-                                      maxLines: 1,
+                                      maxLines: 1, style: TextStyle(color: Colors.white)
                                     ),
                                     subtitle: Text(
                                       cryptocurrency.priceChangePercentage24h
                                               .toStringAsFixed(2) +
-                                          " %",
+                                          " %",style: TextStyle(color: Colors.white)
                                     ),
                                   ))
                             ]),

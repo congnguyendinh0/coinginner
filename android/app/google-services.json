@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:758698438188:android:9694cf5cbabf94397eab89",
         "android_client_info": {
-          "package_name": "com.example.coinginner_flutter"
+          "package_name": "com.coinginner.coinginner"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "758698438188-13omib5ojhpu4mnsqr1sg57n354p9mqh.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.coinginnerFlutter"
+                "bundle_id": "com.coigninner.coinginner"
               }
             }
           ]

@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'data.g.dart';
 
+// not used
+
 @JsonSerializable()
 class Data {
   @JsonKey(name: 'defi_market_cap')

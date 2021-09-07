@@ -4,6 +4,7 @@ import 'package:coinginner_flutter/models/companies/company.dart';
 part 'publictreasury.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+//only for btc and eth
 class PublicTreasury {
   @JsonKey(name: 'companies')
   List<Company>? companies;

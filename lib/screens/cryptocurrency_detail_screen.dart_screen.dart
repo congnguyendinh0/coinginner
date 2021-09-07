@@ -50,7 +50,7 @@ class CoinDetailScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
                 child: Text(
-                  cryptocurrency.id +
+                  cryptocurrency.name +
                       "(" +
                       cryptocurrency.symbol +
                       ")"
@@ -149,6 +149,7 @@ class CoinDetailScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        //First try with syncufsion but decided to move to sparkline due to size
                         /* SfSparkLineChart(
                             axisLineColor: Colors.white,
                             axisLineDashArray: <double>[10, 3],
@@ -295,17 +296,17 @@ class CoinDetailScreen extends StatelessWidget {
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage7dInCurrency) +
+                                              .priceChangePercentage7dInCurrency) +"%"
                                       '\n1 MONTH:' +
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage30dInCurrency) +
+                                              .priceChangePercentage30dInCurrency) +"%"
                                       '\n1 YEAR:' +
                                       NumberFormat.compactCurrency(
                                               decimalDigits: 4, symbol: "")
                                           .format(cryptocurrency
-                                              .priceChangePercentage1yInCurrency),
+                                              .priceChangePercentage1yInCurrency) + "%",
                                   style: TextStyle(
                                     color: Colors.white,
                                   )),

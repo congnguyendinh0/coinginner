@@ -93,7 +93,7 @@ class Cryptocurrency {
         priceChangePercentage7dInCurrency ?? 0;
     this.priceChangePercentage30dInCurrency =
         priceChangePercentage30dInCurrency ?? 0;
-    this.priceChangePercentage30dInCurrency =
+    this.priceChangePercentage1yInCurrency =
         priceChangePercentage1yInCurrency ?? 0;
 
     this.sparkline = sparkline ?? {};

@@ -36,7 +36,7 @@ class NewsScreenUpdate extends StatelessWidget {
                     child: ListTile(
                         trailing: Icon(Icons.local_fire_department),
                         title: Text(
-                          'TRENDING NEWS',
+                          'TRENDING',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -181,11 +181,6 @@ class NewsScreenUpdate extends StatelessWidget {
                                       itemBuilder: (BuildContext itemContext,
                                           int index) {
                                         News news = allNews[index];
-                                        var desc = news.description.substring(
-                                            0,
-                                            news.description.length < 255
-                                                ? news.description.length
-                                                : 255);
 
                                         return SizedBox(
                                           height: MediaQuery.of(context)

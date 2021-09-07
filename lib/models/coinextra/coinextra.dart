@@ -6,6 +6,8 @@ import 'package:coinginner_flutter/models/coinextra/description.dart';
 part 'coinextra.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+
+//extra information for coins 
 class Coinextra {
   String? id;
   Description? description;
