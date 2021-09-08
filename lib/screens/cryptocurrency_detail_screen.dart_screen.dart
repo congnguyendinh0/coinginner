@@ -199,7 +199,7 @@ class CoinDetailScreen extends StatelessWidget {
                               onPressed: () {
                                 Get.offNamed('/exchangelist');
                               },
-                              child: const Text('BUY ON THESE EXCHANGES',
+                              child: const Text('CHECK OUT EXCHANGES',
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                         ),
