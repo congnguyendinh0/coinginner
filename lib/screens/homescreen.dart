@@ -35,7 +35,7 @@ class Homescreen extends StatelessWidget {
             children: [
               CoinScreen(),
               SearchScreen(),
-              NewsScreenUpdate(),
+              NewsScreen(),
               GlossaryScreen(),
               WatchListScreen(),
               MoreScreen()

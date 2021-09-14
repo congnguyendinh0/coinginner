@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/", page: () => Homescreen()),
         GetPage(name: "/coinlist", page: () => CoinScreen()),
         GetPage(name: "/search", page: () => SearchScreen()),
-        GetPage(name: "/explore", page: () => NewsScreenUpdate()),
+        GetPage(name: "/explore", page: () => NewsScreen()),
         GetPage(name: "/exchangelist", page: () => ExchangeListScreen()),
         GetPage(name: "/glossary", page: () => GlossaryScreen()),
         GetPage(name: "/glossary", page: () => MoreScreen()),

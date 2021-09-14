@@ -11,8 +11,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/http_news_service.dart';
 
-class NewsScreenUpdate extends StatelessWidget {
-  const NewsScreenUpdate({Key? key}) : super(key: key);
+class NewsScreen extends StatelessWidget {
+  const NewsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
