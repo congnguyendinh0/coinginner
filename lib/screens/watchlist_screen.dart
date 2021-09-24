@@ -67,6 +67,10 @@ class WatchListScreen extends StatelessWidget {
                 'usd',
                 'eur',
                 'vnd',
+                'aud',
+                'gbp',
+                'rub',
+                'cad',
                 'btc',
                 'eth',
                 'bnb',
@@ -130,15 +134,15 @@ class WatchListScreen extends StatelessWidget {
                                   flex: 1,
                                   child: ListTile(
                                     title: Text(
-                                      cryptocurrency.currentPrice
-                                          .toStringAsFixed(2),
-                                      maxLines: 1, style: TextStyle(color: Colors.white)
-                                    ),
+                                        cryptocurrency.currentPrice
+                                            .toStringAsFixed(2),
+                                        maxLines: 1,
+                                        style: TextStyle(color: Colors.white)),
                                     subtitle: Text(
-                                      cryptocurrency.priceChangePercentage24h
-                                              .toStringAsFixed(2) +
-                                          " %",style: TextStyle(color: Colors.white)
-                                    ),
+                                        cryptocurrency.priceChangePercentage24h
+                                                .toStringAsFixed(2) +
+                                            " %",
+                                        style: TextStyle(color: Colors.white)),
                                   ))
                             ]),
                           ));
