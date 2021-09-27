@@ -16,7 +16,7 @@ Flutter, Firebase, GetX, HiveDb
 
 #### How to install the android app
 
-Android: https://play.google.com/store/apps/details?id=com.coinginner.coinginner
+Android: https://play.google.com/store/apps/details?id=com.coinginner.coinginner // or install coinginner.apk from the repo
 
 #### How to install the ios app
 
